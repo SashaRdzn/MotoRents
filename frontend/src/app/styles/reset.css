@@ -1,0 +1,45 @@
+*,
+*::after,
+*::before {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+button,
+select {
+    cursor: pointer;
+}
+
+a {
+    text-decoration: none;
+}
+
+button,
+input,
+select,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+textarea {
+    font: inherit;
+}
+
+menu,
+ul,
+ol {
+    list-style: none;
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+fieldset {
+    border: none;
+    min-width: unset;
+}

@@ -38,13 +38,13 @@ class UserManager(BaseUserManager):
 class User(AbstractUser):
     email = models.EmailField(unique=True, verbose_name="Email")
     phone = models.CharField(max_length=20, blank=True, null=True, unique=True)
-    username = None
+    username = models.CharField(max_length=50, unique=False, blank=True, null=True)
     driving_experience = models.PositiveSmallIntegerField(
         default=0, verbose_name="Стаж вождения (лет)"
     )
 
     USERNAME_FIELD = "email"
-    REQUIRED_FIELDS = []
+    REQUIRED_FIELDS = ["password"]
 
     objects = UserManager()
 

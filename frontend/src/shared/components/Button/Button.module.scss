@@ -1,0 +1,11 @@
+// SCSS-модуль для Button (shared)
+.button {
+  background: #eee;
+  border: 1px solid #ccc;
+  padding: 8px 16px;
+  border-radius: 4px;
+  transition: background 0.2s;
+  &:hover {
+    background: #ddd;
+  }
+} 

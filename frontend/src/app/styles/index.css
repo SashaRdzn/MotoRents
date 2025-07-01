@@ -1,0 +1,21 @@
+@import './reset.css';
+
+@font-face {
+  font-family: 'Roboto Flex';
+  src: url('@/assets/fonts/roboto-flex.ttf');
+}
+
+:root {
+  font-family: 'Roboto Flex', system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-synthesis: none;
+  text-rendering: optimizelegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background: var(--colors-surfaces-main-0);
+  color: var(--colors-typo-main-0);
+  scrollbar-gutter: stable;
+  overscroll-behavior: none;
+}
