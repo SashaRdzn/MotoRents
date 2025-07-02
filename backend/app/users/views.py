@@ -1,12 +1,27 @@
 from rest_framework.response import Response
 from rest_framework import status
-from rest_framework.generics import CreateAPIView, ListAPIView, RetrieveAPIView
+from rest_framework.generics import (
+    CreateAPIView,
+    ListAPIView,
+    RetrieveAPIView,
+    UpdateAPIView,
+)
 from rest_framework_simplejwt.tokens import RefreshToken
-from rest_framework.views import exceptions
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.views import exceptions, APIView
+from rest_framework.permissions import IsAuthenticated, IsAdminUser
+from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework_simplejwt.exceptions import TokenError
+
+# from drf_simple_jwt_blacklist.serializers import BlacklistSerializer
 
 
-from .serializers import UserSerializers, UserLoginSerializer, ProfileUserSerializer
+from .serializers import (
+    UserSerializers,
+    UserLoginSerializer,
+    ProfileUserSerializer,
+    ProfileUpdateSerializer,
+    UserUpdateSerializer,
+)
 from .models import User, Profile
 
 
@@ -93,3 +108,52 @@ class ProfileUserMe(RetrieveAPIView):
 
     def get_object(self):
         return Profile.objects.get(user=self.request.user)
+
+
+class LogoutView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        try:
+            refresh_token = request.data.get("refresh")
+
+            if not refresh_token:
+                return Response(
+                    {"error": "Refresh token is required"},
+                    status=status.HTTP_400_BAD_REQUEST,
+                )
+            token = RefreshToken(refresh_token)
+            token.blacklist()
+            return Response(
+                {"success": "Successfully logged out"},
+                status=status.HTTP_200_OK,
+            )
+        except Exception as e:
+            return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
+
+
+class UpdateUserRoleView(UpdateAPIView):
+    serializer_class = ProfileUpdateSerializer
+    permission_classes = [IsAdminUser]
+
+    queryset = Profile.objects.all()
+
+    def update(self, request, *args, **kwargs):
+        partial = kwargs.pop("partial", False)
+        instance = self.get_object()
+        serializer = self.get_serializer(instance, data=request.data, partial=partial)
+        serializer.is_valid(raise_exception=True)
+        self.perform_update(serializer)
+
+        if getattr(instance, "_prefetched_objects_cache", None):
+            instance._prefetched_objects_cache = {}
+
+        return Response(serializer.data)
+
+
+class UpdateUserProfileView(UpdateAPIView):
+    serializer_class = UserUpdateSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_object(self):
+        return self.request.user

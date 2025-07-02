@@ -45,3 +45,15 @@ class ProfileUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = Profile
         fields = ["user", "role"]
+
+
+class ProfileUpdateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Profile
+        fields = ["role"]
+
+
+class UserUpdateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ["first_name", "last_name", "phone", "driving_experience"]
