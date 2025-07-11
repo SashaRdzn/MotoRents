@@ -1,1 +1,0 @@
-export const Profilepage = () => <div>Profile Page</div>; 

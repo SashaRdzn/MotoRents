@@ -1,12 +1,12 @@
 @import './reset.css';
 
 @font-face {
-  font-family: 'Roboto Flex';
-  src: url('@/assets/fonts/roboto-flex.ttf');
+  font-family: 'Russo one';
+  src: url('../../assets/fonts/RussoOne-Regular.ttf');
 }
 
 :root {
-  font-family: 'Roboto Flex', system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: 'Russo one', system-ui, Avenir, Helvetica, Arial, sans-serif;
   font-synthesis: none;
   text-rendering: optimizelegibility;
   -webkit-font-smoothing: antialiased;

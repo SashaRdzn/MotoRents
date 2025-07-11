@@ -1,1 +1,0 @@
-// Типы для profileStore 

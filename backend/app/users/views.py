@@ -12,7 +12,6 @@ from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.exceptions import TokenError
 
-# from drf_simple_jwt_blacklist.serializers import BlacklistSerializer
 
 
 from .serializers import (
