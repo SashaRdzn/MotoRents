@@ -1,12 +1,10 @@
-import { Outlet, Link } from 'react-router-dom'
+import Header from '@/components/Header/Header'
+import { Outlet } from 'react-router-dom'
 
 const Layout = () => {
     return (
         <>
-            <header>
-                <Link to={'/home'} >Home</Link>
-                <Link to={'/auth'} >Auth</Link>
-            </header>
+            <Header />
             <main>
                 <Outlet />
             </main>

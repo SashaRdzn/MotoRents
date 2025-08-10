@@ -1,0 +1,34 @@
+.header {
+    display: flex;
+    background-color: var(--bg-secondary);
+    padding: 1rem 2rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.navigate {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    align-items: center;
+}
+
+.leftNav {
+    display: flex;
+    gap: 2rem;
+}
+
+.rightNav {
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+}
+
+a {
+    color: var(--text-main);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s ease;
+    &:hover {
+        color: var(--accent-primary);
+    }
+}

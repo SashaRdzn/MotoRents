@@ -29,6 +29,11 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 
+# ТОЛЬКО ДЛЯ РАЗРАБОТКИ!!!
+CORS_ALLOW_ALL_ORIGINS = True
+#
+
+
 INSTALLED_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
@@ -141,3 +146,13 @@ STATIC_URL = "static/"
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+
+# Отправка email
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = "smtp.gmail.com"
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = "motorentsru@gmail.com"
+EMAIL_HOST_PASSWORD = "azqj ghvn mjrr cshp"
+DEFAULT_FROM_EMAIL = "motorentsru@gmail.com"

@@ -3,8 +3,8 @@ from django.contrib.auth.models import AbstractUser, BaseUserManager
 from django.core.exceptions import ValidationError
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-from django.contrib.auth.hashers import make_password
-
+from django.utils import timezone
+from datetime import timedelta
 
 class UserManager(BaseUserManager):
     use_in_migrations = True
@@ -55,6 +55,20 @@ class User(AbstractUser):
         if self.is_superuser:
             self.is_staff = True
         return super().save(*args, **kwargs)
+
+
+class EmailConfirmation(models.Model):
+    email = models.EmailField(unique=True)
+    code = models.CharField(max_length=4)
+    created_at = models.DateTimeField(auto_now_add=True)
+    is_verified = models.BooleanField(default=False)
+    attempts = models.PositiveIntegerField(default=0)
+
+    def is_expired(self):
+        return timezone.now() > self.created_at + timedelta(minutes=15)
+
+    def __str__(self):
+        return f"{self.email} - {self.code}"
 
 
 class Profile(models.Model):
