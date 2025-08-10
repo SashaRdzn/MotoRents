@@ -1,21 +1,69 @@
-@import './reset.css';
+@import "./reset.css";
 
 @font-face {
-  font-family: 'Russo one';
-  src: url('../../assets/fonts/RussoOne-Regular.ttf');
+  font-family: "Russo one";
+  src: url("../../assets/fonts/RussoOne-Regular.ttf");
 }
 
 :root {
-  font-family: 'Russo one', system-ui, Avenir, Helvetica, Arial, sans-serif;
+  /* Основные настройки */
+  font-family: "Russo one", system-ui, Avenir, Helvetica, Arial, sans-serif;
   font-synthesis: none;
-  text-rendering: optimizelegibility;
+  text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  --bg-primary: #1a1423;
+  --bg-secondary: #2a2133;
+  --text-main: #faed26;
+  --text-secondary: #9d8d8f;
+
+  --accent-primary: #faed26;
+  --accent-danger: #ff5e5b;
+  --accent-warm: #9b786f;
+  --accent-neutral: #5a5560;
+
+  --gradient-primary: linear-gradient(
+    135deg,
+    var(--accent-primary) 0%,
+    rgba(251, 242, 54, 0.7) 100%
+  );
+  --gradient-warm: linear-gradient(135deg, var(--accent-warm) 0%, #8a6e64 100%);
+
+  --border-color: #3e3647;
+  --card-bg: #231b2b;
+  --shadow-primary: 0 4px 20px rgba(250, 237, 38, 0.15);
 }
 
 body {
-  background: var(--colors-surfaces-main-0);
-  color: var(--colors-typo-main-0);
+  background: var(--bg-primary);
+  color: var(--text-main);
+  line-height: 1.6;
   scrollbar-gutter: stable;
   overscroll-behavior: none;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  background: var(--bg-secondary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--accent-warm);
+  border-radius: 4px;
+}
+
+a,
+button {
+  transition: all 0.25s ease;
+}
+
+a:hover {
+  color: var(--accent-warm);
+  text-shadow: 0 0 8px rgba(250, 237, 38, 0.3);
+}
+
+::selection {
+  background: var(--accent-primary);
+  color: var(--bg-primary);
 }

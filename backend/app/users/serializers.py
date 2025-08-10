@@ -2,9 +2,88 @@ from rest_framework import serializers
 from rest_framework.authentication import authenticate
 from rest_framework.views import exceptions
 
-from .models import User, Profile
+from .models import EmailConfirmation, User, Profile
+
+from django.core.mail import send_mail
+from django.conf import settings
+import random
 
 
+class EmailSerializer(serializers.Serializer):
+    email = serializers.EmailField()
+
+    def validate_email(self, value):
+        if User.objects.filter(email=value).exists():
+            raise serializers.ValidationError(
+                "Пользователь с таким email уже существует"
+            )
+        return value
+
+    def create(self, validated_data):
+        email = validated_data["email"]
+        code = str(random.randint(1000, 9999))
+
+        send_mail(
+            subject="Код подтверждения регистрации",
+            message=f"Ваш код подтверждения: {code}\nКод действителен 15 минут.",
+            from_email=settings.DEFAULT_FROM_EMAIL,
+            recipient_list=[email],
+            fail_silently=False,
+        )
+
+        obj, _ = EmailConfirmation.objects.update_or_create(
+            email=email, defaults={"code": code, "is_verified": False, "attempts": 0}
+        )
+        return obj
+
+
+class CodeVerificationSerializer(serializers.Serializer):
+    email = serializers.EmailField()
+    code = serializers.CharField(max_length=4)
+
+    def validate(self, data):
+        try:
+            confirmation = EmailConfirmation.objects.get(email=data["email"])
+
+            if confirmation.is_expired():
+                raise serializers.ValidationError("Срок действия кода истек")
+
+            if confirmation.attempts >= 3:
+                raise serializers.ValidationError("Превышено количество попыток")
+
+            if confirmation.code != data["code"]:
+                confirmation.attempts += 1
+                confirmation.save()
+                raise serializers.ValidationError("Неверный код подтверждения")
+
+        except EmailConfirmation.DoesNotExist:
+            raise serializers.ValidationError("Email не найден")
+
+        return data
+
+
+class UserRegistrationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ["email", "password", "first_name", "last_name"]
+        extra_kwargs = {"password": {"write_only": True}}
+
+    def validate_email(self, value):
+        if not EmailConfirmation.objects.filter(email=value, is_verified=True).exists():
+            raise serializers.ValidationError("Email не подтвержден")
+        return value
+
+    def create(self, validated_data):
+        user = User.objects.create_user(
+            email=validated_data["email"],
+            password=validated_data["password"],
+            first_name=validated_data.get("first_name", ""),
+            last_name=validated_data.get("last_name", ""),
+            is_active=True,
+        )
+        return user
+
+# обычная рега
 class UserSerializers(serializers.ModelSerializer):
     class Meta:
         model = User
@@ -23,6 +102,15 @@ class UserSerializers(serializers.ModelSerializer):
             "password": {"write_only": True},
             "date_joined": {"read_only": True},
         }
+
+    def create(self, validated_data):
+        password = validated_data.pop("password", None)
+        user = User.objects.create_user(**validated_data)
+        if password:
+            user.set_password(password)
+            user.save()
+
+        return user
 
 
 class UserLoginSerializer(serializers.Serializer):
