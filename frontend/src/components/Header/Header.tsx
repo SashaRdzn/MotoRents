@@ -11,7 +11,7 @@ const Header = () => {
             <nav className={styles.navigate}>
                 <div className={styles.leftNav}>
                     <Link to={'/home'}>Главная</Link>
-                    <Link to={'/home'}>Каталог</Link>
+                    <Link to={'/catalog'}>Каталог</Link>
                 </div>
 
                 <div className={styles.rightNav}>

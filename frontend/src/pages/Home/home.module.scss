@@ -1,0 +1,20 @@
+.main__image {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    height: 90vh;
+    background: url('../../assets/pictures/mainImage.png') no-repeat;
+    background-position: center;
+    background-size: cover;
+    background-attachment: local;
+}
+
+.main__text {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 100px;
+    text-align: center;
+    padding-top: 10%;
+    color: white;
+}

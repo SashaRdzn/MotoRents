@@ -64,6 +64,6 @@ a:hover {
 }
 
 ::selection {
-  background: var(--accent-primary);
-  color: var(--bg-primary);
+  background: #433737;
+  /* color: var(--bg-primary); */
 }
