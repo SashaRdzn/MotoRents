@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useRegisterMutation, useSend_codeMutation, useVerify_codeMutation } from '@api/api';
 import { Link, useNavigate } from 'react-router-dom';
 import { CheckEmailOnApproveDomen } from '@/utils/utils';
-import styles from './register.module.scss';
+import styles from '../login.module.scss';
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -170,7 +170,9 @@ const Register = () => {
   return (
     <section className={styles.login}>
       <div className={styles.loginCard}>
-        <h2 className={styles.title}>Зарегистрироваться</h2>
+        <h2 className={styles.title}>регистрация</h2>
+        <p><Link to="/auth/login" className={styles.link}>Вход в систему</Link> для зарегистрированных пользователей</p>
+
         <p className={styles.subtitle}>Шаг {step + 1} из 3</p>
 
         <form
@@ -189,10 +191,6 @@ const Register = () => {
             </div>
           )}
         </form>
-
-        <div className={styles.footer}>
-          <p>Есть аккаунт? <Link to="/auth/login" className={styles.link}>Войти</Link></p>
-        </div>
       </div>
     </section>
   );

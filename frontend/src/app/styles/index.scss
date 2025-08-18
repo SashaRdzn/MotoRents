@@ -1,13 +1,9 @@
 @import "./reset.css";
-
-@font-face {
-  font-family: "Russo one";
-  src: url("../../assets/fonts/RussoOne-Regular.ttf");
-}
+@import '../../styles/styles';
 
 :root {
   /* Основные настройки */
-  font-family: "Russo one", system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: $RUSSO ;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -23,11 +19,9 @@
   --accent-warm: #9b786f;
   --accent-neutral: #5a5560;
 
-  --gradient-primary: linear-gradient(
-    135deg,
-    var(--accent-primary) 0%,
-    rgba(251, 242, 54, 0.7) 100%
-  );
+  --gradient-primary: linear-gradient(135deg,
+      var(--accent-primary) 0%,
+      rgba(251, 242, 54, 0.7) 100%);
   --gradient-warm: linear-gradient(135deg, var(--accent-warm) 0%, #8a6e64 100%);
 
   --border-color: #3e3647;
@@ -58,12 +52,6 @@ button {
   transition: all 0.25s ease;
 }
 
-a:hover {
-  color: var(--accent-warm);
-  text-shadow: 0 0 8px rgba(250, 237, 38, 0.3);
-}
-
 ::selection {
   background: #433737;
-  /* color: var(--bg-primary); */
 }

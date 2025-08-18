@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useLoginMutation } from '@api/api';
-import styles from './login.module.scss';
+import styles from '../login.module.scss';
 import { Link } from 'react-router-dom';
 
 const Login = () => {
@@ -24,9 +24,8 @@ const Login = () => {
     return (
         <section className={styles.login}>
             <div className={styles.loginCard}>
-                <h2 className={styles.title}>Добро пожаловать</h2>
-                <p className={styles.subtitle}>Введите ваши данные для входа</p>
-
+                <h2 className={styles.title}>авторизация</h2>
+                <p><Link to={"/auth/register"} className={styles.link}>Регистрация</Link> для новых пользователей</p>
                 <form onSubmit={handleSubmit} className={styles.form}>
                     <div className={styles.inputGroup}>
                         <label htmlFor="email" className={styles.label}>Email</label>
@@ -68,10 +67,6 @@ const Login = () => {
                         {isLoading ? 'Вход...' : 'Войти'}
                     </button>
                 </form>
-
-                <div className={styles.footer}>
-                    <p>Нет аккаунта? <Link to={"/auth/register"} className={styles.link}>Зарегистрироваться</Link></p>
-                </div>
             </div>
         </section>
     );

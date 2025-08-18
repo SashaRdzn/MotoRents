@@ -1,1 +1,15 @@
+@font-face {
+    font-family: "Russo one";
+    src: url("../assets/fonts/RussoOne-Regular.ttf");
+}
+
+@font-face {
+    font-family: "Akony";
+    src: url("../assets/fonts/AKONY.ttf");
+
+}
+
 $DEFAULT_WHITE: '#fff';
+
+$RUSSO: 'Russo one', sans-serif;
+$AKONY: 'Akony', sans-serif;
