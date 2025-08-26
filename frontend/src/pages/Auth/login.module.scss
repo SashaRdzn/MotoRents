@@ -59,27 +59,25 @@
 .input {
     padding: 0.8rem 1rem;
     border-radius: 8px;
-    border: 1px solid var(--border-color);
-    background: var(--bg-secondary);
+    background-color: transparent;
     color: white;
     font-size: 1rem;
     transition: all 0.2s ease;
+    outline: none;
 
     &:focus {
         outline: none;
-        border-color: var(--accent-primary);
-        box-shadow: 0 0 0 2px rgba(45, 91, 255, 0.2);
+        border-color: white 2px solid;
     }
 
-    &::placeholder {
-        color: var(--text-secondary);
+    &::placeholder {    
         opacity: 0.7;
     }
 }
 
 .submitButton {
-    background: var(--gradient-primary);
-    color: var(--bg-primary);
+    background-color: #C0432D;
+    color: white;
     padding: 0.9rem;
     border: none;
     border-radius: 8px;
