@@ -170,8 +170,8 @@ const Register = () => {
   return (
     <section className={styles.login}>
       <div className={styles.loginCard}>
-        <h2 className={styles.title}>регистрация</h2>
-        <p><Link to="/auth/login" className={styles.link}>Вход в систему</Link> для зарегистрированных пользователей</p>
+        <h2 className={styles.title}>Регистрация</h2>
+        <p>Есть аккаунт? <Link to="/auth/login" className={styles.link}>Вход</Link></p>
 
         <p className={styles.subtitle}>Шаг {step + 1} из 3</p>
 

@@ -32,8 +32,7 @@
 
 .title {
     font-size: 28px;
-    margin-bottom: 0.5rem;
-    text-align: center;
+    text-align: left;
 }
 
 
@@ -59,6 +58,7 @@
 .input {
     padding: 0.8rem 1rem;
     border-radius: 8px;
+    border: none;
     background-color: transparent;
     color: white;
     font-size: 1rem;
@@ -70,7 +70,7 @@
         border-color: white 2px solid;
     }
 
-    &::placeholder {    
+    &::placeholder {
         opacity: 0.7;
     }
 }
@@ -89,7 +89,7 @@
 
     &:hover {
         transform: translateY(-2px);
-        box-shadow: 0 5px 15px rgba(45, 91, 255, 0.3);
+        box-shadow: 0 5px 15px rgba(250, 250, 250, 0.3);
     }
 
     &:disabled {
@@ -111,10 +111,19 @@
 
 
 .link {
-    color: #C0432D;
+    color: #ff2600e2;
     text-decoration: none;
+    text-decoration: underline 1px solid;
 
     &:hover {
         text-decoration: underline;
+        color: #856d69;
+
     }
+}
+
+.subtitle {
+
+    margin: 25px 0 25px 0;
+
 }

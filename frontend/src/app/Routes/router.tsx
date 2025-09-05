@@ -3,6 +3,8 @@ import Layout from '../Layout/Layout'
 import Home from '../../pages/Home/Home'
 import Login from '@/pages/Auth/Login/Login'
 import Register from '@/pages/Auth/Register/Register'
+import Catalog from '@/pages/Catalog/Catalog'
+import MotoDetail from '@/pages/MotoDetail/MotoDetail'
 
 export const router = createBrowserRouter([
     {
@@ -23,7 +25,11 @@ export const router = createBrowserRouter([
             },
             {
                 path: '/catalog',
-                element: <Login />,
+                element: <Catalog />,
+            },
+            {
+                path: "/motorcycle/:id",
+                element: <MotoDetail />
             }
         ]
     }

@@ -1,20 +1,663 @@
-.main__image {
-    position: relative;
-    z-index: 1;
-    width: 100%;
-    height: 90vh;
-    background: url('../../assets/pictures/mainImage.png') no-repeat;
-    background-position: center;
-    background-size: cover;
-    background-attachment: local;
+// home.module.scss
+.homePage {
+  background: linear-gradient(180deg, #0a0a0a 0%, #1a1a1a 100%);
+  color: #ffffff;
 }
 
-.main__text {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 100px;
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* Герой-секция */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('../../assets/pictures/fon.jpg') no-repeat center;
+    background-size: cover;
+    opacity: 0.15;
+    z-index: 1;
+  }
+  
+  .heroContent {
+    position: relative;
+    z-index: 2;
     text-align: center;
-    padding-top: 10%;
-    color: white;
+    max-width: 800px;
+    padding: 0 20px;
+    
+    .heroTitle {
+      font-size: 4rem;
+      font-weight: bold;
+      margin-bottom: 20px;
+      line-height: 1.2;
+      
+      span {
+        background: linear-gradient(90deg, #ff4500, #ff8c00);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+    }
+    
+    .heroSubtitle {
+      font-size: 1.3rem;
+      margin-bottom: 30px;
+      color: #cccccc;
+      line-height: 1.6;
+    }
+    
+    .heroButtons {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      
+      .primaryButton, .secondaryButton {
+        padding: 15px 30px;
+        border-radius: 8px;
+        font-size: 1.1rem;
+        font-weight: bold;
+        text-decoration: none;
+        transition: all 0.3s ease;
+      }
+      
+      .primaryButton {
+        background: linear-gradient(90deg, #ff4500, #ff8c00);
+        color: white;
+        
+        &:hover {
+          transform: translateY(-3px);
+          box-shadow: 0 5px 15px rgba(255, 69, 0, 0.4);
+        }
+      }
+      
+      .secondaryButton {
+        background: transparent;
+        color: #9b59b6;
+        border: 2px solid #9b59b6;
+        
+        &:hover {
+          background: rgba(155, 89, 182, 0.1);
+          transform: translateY(-3px);
+        }
+      }
+    }
+  }
+}
+
+/* Общие стили для секций */
+section {
+  padding: 80px 0;
+}
+
+.sectionTitle {
+  font-size: 2.5rem;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 50px;
+  background: linear-gradient(90deg, #ff4500, #ff8c00);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-transform: uppercase;
+  position: relative;
+  
+  &::after {
+    content: '';
+    display: block;
+    width: 100px;
+    height: 4px;
+    background: linear-gradient(90deg, #ff4500, #9b59b6);
+    margin: 15px auto 0;
+  }
+}
+
+/* Преимущества */
+.advantages {
+  background: linear-gradient(180deg, #1a1a1a 0%, #0f0f0f 100%);
+  
+  .advantagesGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+  }
+  
+  .advantageCard {
+    background: linear-gradient(135deg, #1e1e1e 0%, #2a2a2a 100%);
+    border-radius: 15px;
+    padding: 30px;
+    text-align: center;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease;
+    
+    &:hover {
+      transform: translateY(-10px);
+    }
+    
+    .advantageIcon {
+      width: 80px;
+      height: 80px;
+      margin: 0 auto 20px;
+      
+      .iconGradient {
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(135deg, #ff4500, #ff8c00);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: transform 0.3s ease;
+        
+        .iconEmoji {
+          font-size: 2rem;
+        }
+      }
+    }
+    
+    &:hover .advantageIcon .iconGradient {
+      transform: rotate(15deg);
+    }
+    
+    h3 {
+      font-size: 1.5rem;
+      margin-bottom: 15px;
+      color: #ff8c00;
+    }
+    
+    p {
+      color: #cccccc;
+      line-height: 1.6;
+    }
+  }
+}
+
+/* Наши достижения */
+.achievements {
+  background: linear-gradient(180deg, #1a1a1a 0%, #0f0f0f 100%);
+  
+  .achievementsGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 30px;
+  }
+  
+  .achievementCard {
+    background: linear-gradient(135deg, #1e1e1e 0%, #2a2a2a 100%);
+    border-radius: 15px;
+    padding: 30px;
+    text-align: center;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease;
+    
+    &:hover {
+      transform: translateY(-10px);
+    }
+    
+    .achievementNumber {
+      font-size: 2.5rem;
+      font-weight: bold;
+      margin-bottom: 10px;
+      background: linear-gradient(90deg, #ff4500, #9b59b6);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    
+    .achievementTitle {
+      font-size: 1.1rem;
+      color: #cccccc;
+    }
+  }
+}
+
+/* Карусель мотоциклов */
+.motorcycleCarousel {
+  background: linear-gradient(180deg, #1a1a1a 0%, #0f0f0f 100%);
+  
+  .carouselContainer {
+    overflow: hidden;
+    position: relative;
+    padding: 20px 0;
+    width: 100%;
+  }
+  
+  .carouselTrack {
+    display: flex;
+    animation: scroll 30s linear infinite;
+    width: max-content;
+    
+    .carouselItem {
+      flex: 0 0 auto;
+      width: 300px;
+      margin-right: 30px;
+      background: linear-gradient(135deg, #1e1e1e 0%, #2a2a2a 100%);
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+      transition: transform 0.3s ease;
+      
+      &:hover {
+        transform: scale(1.05);
+      }
+      
+      .carouselItemImage {
+        height: 180px;
+        overflow: hidden;
+        
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+      }
+      
+      .carouselItemInfo {
+        padding: 15px;
+        
+        h3 {
+          font-size: 1.3rem;
+          margin-bottom: 10px;
+          color: #ff8c00;
+        }
+        
+        .carouselItemSpecs {
+          display: flex;
+          justify-content: space-between;
+          margin-bottom: 10px;
+          
+          span {
+            font-size: 0.9rem;
+            color: #cccccc;
+          }
+        }
+        
+        .carouselItemPrice {
+          font-size: 1.2rem;
+          font-weight: bold;
+          background: linear-gradient(90deg, #ff4500, #9b59b6);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+        }
+      }
+    }
+  }
+}
+
+/* Как это работает */
+.howItWorks {
+  background: linear-gradient(180deg, #1a1a1a 0%, #0f0f0f 100%);
+  
+  .stepsGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+  }
+  
+  .stepCard {
+    background: linear-gradient(135deg, #1e1e1e 0%, #2a2a2a 100%);
+    border-radius: 15px;
+    padding: 30px;
+    text-align: center;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease;
+    
+    &:hover {
+      transform: translateY(-10px);
+    }
+    
+    .stepNumber {
+      width: 60px;
+      height: 60px;
+      margin: 0 auto 20px;
+      
+      .stepNumberGradient {
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(135deg, #ff4500, #9b59b6);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.8rem;
+        font-weight: bold;
+        transition: transform 0.3s ease;
+      }
+    }
+    
+    &:hover .stepNumber .stepNumberGradient {
+      transform: rotate(15deg);
+    }
+    
+    h3 {
+      font-size: 1.5rem;
+      margin-bottom: 15px;
+      color: #ff8c00;
+    }
+    
+    p {
+      color: #cccccc;
+      line-height: 1.6;
+    }
+  }
+}
+
+/* Часто задаваемые вопросы */
+.faq {
+  background: linear-gradient(180deg, #1a1a1a 0%, #0f0f0f 100%);
+  
+  .faqGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    align-items: start; // Важно для правильного позиционирования
+  }
+  
+  .faqItem {
+    background: linear-gradient(135deg, #1e1e1e 0%, #2a2a2a 100%);
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+    cursor: pointer;
+    position: relative; // Для правильного позиционирования
+    z-index: 1; // Поднимаем над другими элементами
+    
+    &:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+    }
+    
+    .faqQuestion {
+      padding: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start; // Выравниваем по верху
+      min-height: 80px; // Минимальная высота для консистентности
+      
+      h3 {
+        font-size: 1.2rem;
+        color: #9b59b6;
+        margin: 0;
+        flex: 1;
+        padding-right: 15px;
+        line-height: 1.4;
+        font-weight: 600;
+      }
+      
+      .faqToggle {
+        font-size: 1.5rem;
+        color: #9b59b6;
+        transition: transform 0.3s ease;
+        flex-shrink: 0;
+        margin-top: 2px;
+        font-weight: bold;
+      }
+    }
+    
+    .faqAnswer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+      background: rgba(0, 0, 0, 0.1);
+      
+      p {
+        margin: 0;
+        color: #cccccc;
+        line-height: 1.6;
+        padding: 0 20px;
+        opacity: 0;
+        transition: opacity 0.3s ease 0.1s, padding 0.3s ease;
+        font-size: 0.95rem;
+      }
+    }
+    
+    &.active {
+      z-index: 2; // Поднимаем активный элемент выше остальных
+      transform: translateY(-2px);
+      
+      .faqToggle {
+        transform: rotate(180deg);
+        color: #ff8c00;
+      }
+      
+      .faqAnswer {
+        max-height: 500px;
+        
+        p {
+          opacity: 1;
+          padding: 0 20px 20px;
+        }
+      }
+    }
+    
+    // Анимация для плавного перемещения элементов
+    &.moving {
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+    }
+  }
+}
+
+
+/* Карусель отзывов */
+.testimonialsCarousel {
+  background: linear-gradient(180deg, #1a1a1a 0%, #0f0f0f 100%);
+  
+  .carouselContainer {
+    overflow: hidden;
+    position: relative;
+    padding: 20px 0;
+    width: 100%;
+  }
+  
+  .carouselTrackReverse {
+    display: flex;
+    animation: scrollReverse 35s linear infinite;
+    width: max-content;
+    
+    .testimonialCard {
+      flex: 0 0 auto;
+      width: 350px;
+      margin-right: 30px;
+      background: linear-gradient(135deg, #1e1e1e 0%, #2a2a2a 100%);
+      border-radius: 15px;
+      padding: 25px;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+      transition: transform 0.3s ease;
+      
+      &:hover {
+        transform: scale(1.05);
+      }
+      
+      .testimonialRating {
+        margin-bottom: 15px;
+        
+        .starFilled {
+          color: #ff8c00;
+        }
+        
+        .starEmpty {
+          color: #444;
+        }
+      }
+      
+      .testimonialText {
+        font-style: italic;
+        margin-bottom: 20px;
+        line-height: 1.6;
+        color: #cccccc;
+      }
+      
+      .testimonialAuthor {
+        font-weight: bold;
+        color: #9b59b6;
+      }
+    }
+  }
+}
+
+/* Призыв к действию */
+.cta {
+  background: linear-gradient(135deg, #1a1a1a 0%, #0f0f0f 100%);
+  
+  .ctaContent {
+    background: linear-gradient(135deg, #1e1e1e 0%, #2a2a2a 100%);
+    border-radius: 15px;
+    padding: 50px;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    
+    h2 {
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+      background: linear-gradient(90deg, #ff4500, #ff8c00);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    
+    p {
+      font-size: 1.2rem;
+      margin-bottom: 30px;
+      color: #cccccc;
+      max-width: 700px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    
+    .ctaButton {
+      display: inline-block;
+      padding: 15px 40px;
+      background: linear-gradient(90deg, #ff4500, #9b59b6);
+      color: white;
+      border-radius: 8px;
+      font-size: 1.2rem;
+      font-weight: bold;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      
+      &:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 5px 15px rgba(255, 69, 0, 0.4);
+      }
+    }
+  }
+}
+
+/* Футер */
+.footer {
+  background: #000;
+  padding: 50px 0 20px;
+  
+  .footerContent {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 40px;
+    margin-bottom: 40px;
+    
+    @media (max-width: 768px) {
+      grid-template-columns: 1fr;
+    }
+  }
+  
+  .footerLogo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
+    .logoPlaceholder {
+      width: 120px;
+      height: 50px;
+      background: linear-gradient(90deg, #ff4500, #9b59b6);
+      border-radius: 8px;
+      margin-bottom: 15px;
+      transition: transform 0.3s ease;
+      
+      &:hover {
+        transform: scale(1.05);
+      }
+    }
+    
+    h3 {
+      font-size: 1.8rem;
+      background: linear-gradient(90deg, #ff4500, #9b59b6);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+  }
+  
+  .footerLinks {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    
+    @media (max-width: 768px) {
+      grid-template-columns: 1fr;
+    }
+    
+    .footerColumn {
+      h4 {
+        font-size: 1.2rem;
+        margin-bottom: 20px;
+        color: #ff8c00;
+      }
+      
+      ul {
+        list-style-type: none;
+        
+        li {
+          margin-bottom: 10px;
+          
+          a {
+            color: #cccccc;
+            text-decoration: none;
+            transition: color 0.3s ease;
+            
+            &:hover {
+              color: #9b59b6;
+            }
+          }
+        }
+      }
+    }
+  }
+  
+  .footerBottom {
+    text-align: center;
+    padding-top: 20px;
+    border-top: 1px solid #333;
+    
+    p {
+      color: #888;
+      font-size: 0.9rem;
+    }
+  }
+}
+
+/* Анимации для карусели */
+@keyframes scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes scrollReverse {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
 }

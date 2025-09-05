@@ -1,0 +1,231 @@
+// MotorcycleDetailPage.module.scss
+.detailPage {
+  min-height: 100vh;
+  background: linear-gradient(180deg, #0a0a0a 0%, #1a1a1a 100%);
+  color: #ffffff;
+  padding: 40px 20px;
+}
+
+.detailContainer {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.detailHeader {
+  margin-bottom: 30px;
+  
+  .backLink {
+    display: inline-block;
+    margin-bottom: 15px;
+    color: #ff8c00;
+    text-decoration: none;
+    font-size: 1.1rem;
+    transition: color 0.3s ease;
+    
+    &:hover {
+      color: #ff4500;
+    }
+  }
+  
+  h1 {
+    font-size: 2.5rem;
+    font-weight: bold;
+    background: linear-gradient(90deg, #ff4500, #ff8c00);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+}
+
+.detailContent {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  
+  @media (max-width: 968px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.detailImage {
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+  
+  img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+}
+
+.detailInfo {
+  .detailPrice {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 25px;
+    background: linear-gradient(90deg, #ff4500, #ff8c00);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  
+  .detailDescription {
+    margin-bottom: 30px;
+    
+    h3 {
+      font-size: 1.5rem;
+      margin-bottom: 15px;
+      color: #ff8c00;
+    }
+    
+    p {
+      line-height: 1.6;
+      color: #cccccc;
+    }
+  }
+  
+  .detailSpecs {
+    margin-bottom: 30px;
+    
+    h3 {
+      font-size: 1.5rem;
+      margin-bottom: 15px;
+      color: #ff8c00;
+    }
+    
+    .specsGrid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 15px;
+    }
+    
+    .specItem {
+      background: linear-gradient(135deg, #1e1e1e 0%, #2a2a2a 100%);
+      border-radius: 10px;
+      padding: 15px;
+      
+      .specLabel {
+        display: block;
+        font-size: 0.9rem;
+        color: #888888;
+        margin-bottom: 5px;
+      }
+      
+      .specValue {
+        font-size: 1.1rem;
+        font-weight: bold;
+        color: #ffffff;
+      }
+    }
+  }
+  
+  .detailFeatures {
+    margin-bottom: 30px;
+    
+    h3 {
+      font-size: 1.5rem;
+      margin-bottom: 15px;
+      color: #ff8c00;
+    }
+    
+    ul {
+      list-style-type: none;
+      padding: 0;
+      
+      li {
+        position: relative;
+        padding-left: 25px;
+        margin-bottom: 10px;
+        line-height: 1.6;
+        color: #cccccc;
+        
+        &:before {
+          content: '▸';
+          position: absolute;
+          left: 0;
+          color: #ff4500;
+        }
+      }
+    }
+  }
+  
+  .detailActions {
+    display: flex;
+    gap: 20px;
+    
+    .rentButton, .favoritesButton {
+      flex: 1;
+      padding: 15px;
+      border: none;
+      border-radius: 8px;
+      font-size: 1.1rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .rentButton {
+      background: linear-gradient(90deg, #ff4500, #ff8c00);
+      color: white;
+      
+      &:hover {
+        background: linear-gradient(90deg, #ff8c00, #ff4500);
+        box-shadow: 0 5px 15px rgba(255, 69, 0, 0.4);
+      }
+    }
+    
+    .favoritesButton {
+      background: transparent;
+      color: #ff8c00;
+      border: 2px solid #ff8c00;
+      
+      &:hover {
+        background: rgba(255, 140, 0, 0.1);
+      }
+    }
+  }
+}
+
+.detailLoading, .notFound {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+  
+  .loadingSpinner {
+    width: 50px;
+    height: 50px;
+    border: 5px solid rgba(255, 69, 0, 0.2);
+    border-radius: 50%;
+    border-top-color: #ff4500;
+    animation: spin 1s ease-in-out infinite;
+    margin-bottom: 20px;
+  }
+  
+  p, h2 {
+    color: #cccccc;
+  }
+  
+  .backButton {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 12px 25px;
+    background: linear-gradient(90deg, #ff4500, #ff8c00);
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    
+    &:hover {
+      background: linear-gradient(90deg, #ff8c00, #ff4500);
+      box-shadow: 0 5px 15px rgba(255, 69, 0, 0.4);
+    }
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
