@@ -10,7 +10,7 @@ from .serializers import (
 
 
 class MotorcycleViewSet(viewsets.ModelViewSet):
-    queryset = Motocycles.objects.filter(is_available=True)
+    queryset = Motocycles.objects.filter(is_available=True).prefetch_related("photos")
     serializer_class = MotocycleSerializer
     http_method_names = ["get", "post", "put", "patch"]
 

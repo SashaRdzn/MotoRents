@@ -1,7 +1,37 @@
 import { RouterProvider } from 'react-router-dom';
 import { router } from './Routes/router';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import type { RootState } from './store/store';
+import { setTokens } from './store/slices/authSlice';
+import { useGetMeQuery } from './api/api';
+import { setUser } from './store/slices/authSlice';
+import { ToastProvider } from '@/components/Toast/ToastProvider';
 
 
 export function App() {
-  return <RouterProvider router={router} />;
+  const dispatch = useDispatch();
+  const tokens = useSelector((s: RootState)=>({ ac: s.auth.tokenAc, ref: s.auth.tokenRef }))
+  const { data: meData } = useGetMeQuery(undefined, { skip: !tokens.ac })
+  useEffect(()=>{
+    if (!tokens.ac || !tokens.ref) {
+      const access = localStorage.getItem('token_access')
+      const refresh = localStorage.getItem('token_refresh')
+      if (access && refresh) {
+        dispatch(setTokens({ access, refresh }))
+      }
+    }
+  },[])
+  useEffect(()=>{
+    const role = (meData as any)?.user?.role || (meData as any)?.role
+    const email = (meData as any)?.user?.email || (meData as any)?.user_email
+    if (email || role) {
+      dispatch(setUser({ email, role }))
+    }
+  }, [meData])
+  return (
+    <ToastProvider>
+      <RouterProvider router={router} />
+    </ToastProvider>
+  );
 } 

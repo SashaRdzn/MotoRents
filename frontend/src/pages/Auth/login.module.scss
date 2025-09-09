@@ -2,7 +2,7 @@
     display: flex;
     align-items: center;
     min-height: 100vh;
-    background-color: black;
+    background: linear-gradient(180deg, #0a0a0a 0%, #1a1a1a 100%);
     position: relative;
     isolation: isolate;
     color: white;
@@ -27,12 +27,19 @@
     margin-left: 5rem;
     width: 100%;
     max-width: 450px;
-
+    background: linear-gradient(135deg, #1e1e1e 0%, #2a2a2a 100%);
+    border-radius: 15px;
+    padding: 28px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
 }
 
 .title {
-    font-size: 28px;
+    font-size: 32px;
     text-align: left;
+    margin-bottom: 8px;
+    background: linear-gradient(90deg, #ff4500, #ff8c00);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
 
@@ -59,7 +66,7 @@
     padding: 0.8rem 1rem;
     border-radius: 8px;
     border: none;
-    background-color: transparent;
+    background-color: #0f0f0f;
     color: white;
     font-size: 1rem;
     transition: all 0.2s ease;
@@ -67,7 +74,7 @@
 
     &:focus {
         outline: none;
-        border-color: white 2px solid;
+        box-shadow: 0 0 0 2px rgba(255, 140, 0, 0.35);
     }
 
     &::placeholder {
@@ -76,7 +83,7 @@
 }
 
 .submitButton {
-    background-color: #C0432D;
+    background: linear-gradient(90deg, #ff4500, #ff8c00);
     color: white;
     padding: 0.9rem;
     border: none;
@@ -89,7 +96,7 @@
 
     &:hover {
         transform: translateY(-2px);
-        box-shadow: 0 5px 15px rgba(250, 250, 250, 0.3);
+        box-shadow: 0 5px 15px rgba(255, 69, 0, 0.3);
     }
 
     &:disabled {
@@ -126,4 +133,11 @@
 
     margin: 25px 0 25px 0;
 
+}
+
+.emailDisplay {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255, 140, 0, 0.25);
+    padding: 10px 12px;
+    border-radius: 8px;
 }

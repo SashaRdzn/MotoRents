@@ -1,0 +1,25 @@
+.page {
+  min-height: 100vh;
+  background: linear-gradient(180deg, #0a0a0a 0%, #1a1a1a 100%);
+  color: #fff;
+  padding: 40px 20px;
+}
+.title {
+  max-width: 800px;
+  margin: 0 auto 20px;
+  font-size: 2rem;
+  background: linear-gradient(90deg, #ff4500, #ff8c00);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.form {
+  max-width: 800px;
+  margin: 0 auto;
+  display: grid;
+  gap: 12px;
+}
+.form label { display: grid; gap: 6px; }
+.form input { background: #0f0f0f; color: #fff; border: 1px solid #333; border-radius: 8px; padding: 10px 12px; }
+.form button { justify-self: start; background: linear-gradient(90deg, #ff4500, #ff8c00); color: #fff; border: none; border-radius: 8px; padding: 10px 16px; cursor: pointer; }
+
+

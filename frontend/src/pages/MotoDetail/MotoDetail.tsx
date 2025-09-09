@@ -1,50 +1,37 @@
-// pages/MotorcycleDetailPage.jsx
-import React, { useState, useEffect } from 'react';
+import React, { useMemo } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import styles from './motoDetail.module.scss';
+import { useGetMotorcycleByIdQuery } from '@/app/api/api';
+import type { Motorcycle } from '@/pages/Catalog/catalogApi';
+import BookingModal from '@/components/BookingModal/BookingModal';
+import { useCreateBookingMutation } from '@/app/api/api';
+import { useToast } from '@/components/Toast/ToastProvider';
+
+const serverUrl = import.meta.env.VITE_SERVER_URL || '';
 
 function MotoDetail() {
   const { id } = useParams();
-  const [motorcycle, setMotorcycle] = useState(null);
-  const [loading, setLoading] = useState(true);
-  
-  // Заглушка для данных мотоцикла
-  const mockMotorcycle = {
-    id: parseInt(id),
-    name: "KAYO TT124",
-    power: "9 л.с.",
-    engine: "154FMI",
-    price: "2500 ₽/день",
-    image: "https://z-cdn-media.chatglm.cn/files/315f36f2-1b9b-476c-aa65-25561030c5e5_pasted_image_1757102204561.png?auth_key=1788649079-b0eaca9d20e649ccb9d985e35fd56150-0-b3c7258c9e12107598900716d6247275",
-    description: "Компактный и маневренный мотоцикл, идеальный для городских поездок и обучения езде. Обладает отличной управляемостью и экономичным расходом топлива.",
-    specs: {
-      type: "Спорт",
-      weight: "110 кг",
-      fuelTank: "10 л",
-      topSpeed: "90 км/ч",
-      transmission: "4-ступенчатая",
-      brakes: "Дисковые тормоза"
-    },
-    features: [
-      "Экономичный расход топлива",
-      "Компактные габариты",
-      "Легкий вес",
-      "Надежная конструкция",
-      "Простота в обслуживании"
-    ]
-  };
+  const { data, isLoading } = useGetMotorcycleByIdQuery(String(id));
+  const [createBooking, { isLoading: isBooking }] = useCreateBookingMutation();
+  const [isOpen, setIsOpen] = React.useState(false);
+  const { show } = useToast();
 
-  useEffect(() => {
-    // Имитация загрузки данных с сервера
-    setLoading(true);
-    
-    setTimeout(() => {
-      setMotorcycle(mockMotorcycle);
-      setLoading(false);
-    }, 500);
-  }, [id]);
+  const mc = useMemo(() => {
+    if (!data) return null;
+    const m = data as Motorcycle;
+    const images = (m.photos ?? []).map((p) => p.image.startsWith('http') ? p.image : `${serverUrl}${p.image}`);
+    return {
+      id: m.id,
+      name: `${m.brand} ${m.model}`,
+      power: `${m.power} л.с.`,
+      engine: `${m.engine_volume} cc`,
+      price: `${m.daily_price} ₽/день`,
+      description: m.description,
+      images: images.length ? images : ['/mainFon.jpg']
+    };
+  }, [data]);
 
-  if (loading) {
+  if (isLoading) {
     return (
       <div className={styles.detailLoading}>
         <div className={styles.loadingSpinner}></div>
@@ -53,7 +40,7 @@ function MotoDetail() {
     );
   }
 
-  if (!motorcycle) {
+  if (!mc) {
     return (
       <div className={styles.notFound}>
         <h2>Мотоцикл не найден</h2>
@@ -69,59 +56,154 @@ function MotoDetail() {
           <Link to="/catalog" className={styles.backLink}>
             ← Назад в каталог
           </Link>
-          <h1>{motorcycle.name}</h1>
+          <h1>{mc.name}</h1>
         </div>
         
         <div className={styles.detailContent}>
-          <div className={styles.detailImage}>
-            <img src={motorcycle.image} alt={motorcycle.name} />
+          <div
+            className={styles.detailImage}
+            onMouseEnter={(e) => {
+              const container = e.currentTarget as any;
+              container._images = mc.images;
+              if (!container._images || container._images.length < 2) return;
+              container._idx = 0;
+              container._dir = 1;
+              const base = container.querySelector('img[data-role="base"]') as HTMLImageElement;
+              const overlay = container.querySelector('img[data-role="overlay"]') as HTMLImageElement;
+              container._interval = setInterval(() => {
+                const len = container._images.length;
+                container._idx = (container._idx + container._dir + len) % len;
+                const nextSrc = container._images[container._idx];
+                overlay.src = nextSrc;
+                overlay.style.opacity = '1';
+                setTimeout(() => {
+                  base.src = nextSrc;
+                  overlay.style.opacity = '0';
+                }, 400);
+              }, 1600);
+            }}
+            onMouseMove={(e) => {
+              const container = e.currentTarget as any;
+              if (!container._images) return;
+              const rect = (e.currentTarget as HTMLElement).getBoundingClientRect();
+              const x = e.clientX - rect.left;
+              container._dir = x < rect.width / 2 ? -1 : 1;
+            }}
+            onMouseLeave={(e) => {
+              const container = e.currentTarget as any;
+              if (container._interval) clearInterval(container._interval);
+              const base = container.querySelector('img[data-role="base"]') as HTMLImageElement;
+              const overlay = container.querySelector('img[data-role="overlay"]') as HTMLImageElement;
+              base.src = mc.images[0];
+              overlay.style.opacity = '0';
+            }}
+          >
+            <img data-role="base" className={styles.imgBase} src={mc.images[0]} alt={mc.name} />
+            <img data-role="overlay" className={styles.imgOverlay} src={mc.images[0]} alt="overlay" />
           </div>
           
           <div className={styles.detailInfo}>
             <div className={styles.detailPrice}>
-              {motorcycle.price}
+              {mc.price}
             </div>
             
             <div className={styles.detailDescription}>
               <h3>Описание</h3>
-              <p>{motorcycle.description}</p>
+              <p>{mc.description}</p>
             </div>
-            
+
             <div className={styles.detailSpecs}>
               <h3>Характеристики</h3>
               <div className={styles.specsGrid}>
-                {Object.entries(motorcycle.specs).map(([key, value]) => (
-                  <div key={key} className={styles.specItem}>
-                    <span className={styles.specLabel}>
-                      {key === 'type' ? 'Тип' : 
-                       key === 'weight' ? 'Вес' :
-                       key === 'fuelTank' ? 'Топливный бак' :
-                       key === 'topSpeed' ? 'Макс. скорость' :
-                       key === 'transmission' ? 'Трансмиссия' :
-                       key === 'brakes' ? 'Тормоза' : key}
-                    </span>
-                    <span className={styles.specValue}>{value}</span>
-                  </div>
-                ))}
+                <div className={styles.specItem}>
+                  <span className={styles.specLabel}>Бренд</span>
+                  <span className={styles.specValue}>{(data as Motorcycle).brand}</span>
+                </div>
+                <div className={styles.specItem}>
+                  <span className={styles.specLabel}>Модель</span>
+                  <span className={styles.specValue}>{(data as Motorcycle).model}</span>
+                </div>
+                <div className={styles.specItem}>
+                  <span className={styles.specLabel}>Год</span>
+                  <span className={styles.specValue}>{(data as Motorcycle).year}</span>
+                </div>
+                <div className={styles.specItem}>
+                  <span className={styles.specLabel}>Категория</span>
+                  <span className={styles.specValue}>{(data as Motorcycle).category}</span>
+                </div>
+                <div className={styles.specItem}>
+                  <span className={styles.specLabel}>Объем двигателя</span>
+                  <span className={styles.specValue}>{(data as Motorcycle).engine_volume} cc</span>
+                </div>
+                <div className={styles.specItem}>
+                  <span className={styles.specLabel}>Мощность</span>
+                  <span className={styles.specValue}>{(data as Motorcycle).power} л.с.</span>
+                </div>
+                <div className={styles.specItem}>
+                  <span className={styles.specLabel}>Тип топлива</span>
+                  <span className={styles.specValue}>{(data as Motorcycle).fuel_type}</span>
+                </div>
+                <div className={styles.specItem}>
+                  <span className={styles.specLabel}>Трансмиссия</span>
+                  <span className={styles.specValue}>{(data as Motorcycle).transmission}</span>
+                </div>
+                <div className={styles.specItem}>
+                  <span className={styles.specLabel}>Вес</span>
+                  <span className={styles.specValue}>{(data as Motorcycle).weight} кг</span>
+                </div>
+                <div className={styles.specItem}>
+                  <span className={styles.specLabel}>Мин. аренда (часы)</span>
+                  <span className={styles.specValue}>{(data as Motorcycle).min_rental_hours}</span>
+                </div>
+                <div className={styles.specItem}>
+                  <span className={styles.specLabel}>Мин. аренда (дни)</span>
+                  <span className={styles.specValue}>{(data as Motorcycle).min_rental_days}</span>
+                </div>
+                <div className={styles.specItem}>
+                  <span className={styles.specLabel}>Доступность</span>
+                  <span className={styles.specValue}>{(data as Motorcycle).is_available ? 'доступен' : 'недоступен'}</span>
+                </div>
               </div>
             </div>
-            
+
             <div className={styles.detailFeatures}>
               <h3>Особенности</h3>
               <ul>
-                {motorcycle.features.map((feature, index) => (
-                  <li key={index}>{feature}</li>
-                ))}
+                <li>Категория: {(data as Motorcycle).category}</li>
+                <li>Топливо: {(data as Motorcycle).fuel_type}</li>
+                <li>Трансмиссия: {(data as Motorcycle).transmission}</li>
+                <li>Мин. аренда: {(data as Motorcycle).min_rental_hours} ч / {(data as Motorcycle).min_rental_days} дн</li>
               </ul>
             </div>
-            
+
             <div className={styles.detailActions}>
-              <button className={styles.rentButton}>Арендовать</button>
+              <button className={styles.rentButton} onClick={()=>setIsOpen(true)} disabled={isBooking}>Арендовать</button>
               <button className={styles.favoritesButton}>В избранное</button>
             </div>
           </div>
         </div>
       </div>
+      <BookingModal
+        isOpen={isOpen}
+        onClose={()=>setIsOpen(false)}
+        motorcycleId={mc.id}
+        dailyPrice={Number((data as Motorcycle).daily_price)}
+        onSubmit={async ({ booking_type, start_time, end_time }) => {
+          try {
+            await createBooking({
+              motorcycle: mc.id,
+              booking_type,
+              rental_period: { start_time, end_time },
+            }).unwrap()
+            setIsOpen(false)
+            show('Бронирование создано', 'success')
+          } catch (e: any) {
+            // Ошибки валидации бэка будут отображены отдельной модалкой/тостом при доработке
+            console.error(e)
+            show('Не удалось создать бронирование', 'error')
+          }
+        }}
+      />
     </div>
   );
 }

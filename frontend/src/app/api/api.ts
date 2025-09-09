@@ -1,7 +1,10 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import type { RootState } from '../store/store'
 import { authLoginApi } from '@/pages/Auth/authApi'
+import { catalogApi } from '@/pages/Catalog/catalogApi'
+import { bookingApi } from '@/components/BookingModal/bookingApi'
 import type { CustomBaseQuery } from '@/types/typesAll'
+import { setTokens } from '../store/slices/authSlice'
 
 export const TAG_TYPES = {
     AUTH: 'Auth',
@@ -9,19 +12,42 @@ export const TAG_TYPES = {
     SPACE: 'Space',
 } as const
 
+const rawBaseQuery = fetchBaseQuery({
+    baseUrl: import.meta.env.VITE_SERVER_URL,
+    // credentials: 'include',
+    prepareHeaders: (headers, { getState }) => {
+        const token = (getState() as RootState).auth.tokenAc
+        if (token) headers.set('Authorization', `Bearer ${token}`)
+        return headers
+    },
+}) as CustomBaseQuery
+
+const baseQueryWithReauth: CustomBaseQuery = async (args, api, extra) => {
+    let result = await rawBaseQuery(args, api, extra)
+    if ((result as any)?.error?.status === 401) {
+        const state = api.getState() as RootState
+        const refresh = state.auth.tokenRef
+        if (refresh) {
+            const refreshResult = await rawBaseQuery({ url: '/auth/refresh', method: 'POST', body: { refresh } }, api, extra)
+            const newAccess = (refreshResult as any)?.data?.access
+            if (newAccess) {
+                api.dispatch(setTokens({ access: newAccess, refresh }))
+                try { localStorage.setItem('token_access', newAccess) } catch {}
+                result = await rawBaseQuery(args, api, extra)
+            }
+        }
+    }
+    return result
+}
+
 export const api = createApi({
     reducerPath: 'api',
-    baseQuery: fetchBaseQuery({
-        baseUrl: import.meta.env.VITE_SERVER_URL,
-        prepareHeaders: (headers, { getState }) => {
-            const token = (getState() as RootState).auth.tokenAc
-            if (token) headers.set('Authorization', `Bearer ${token}`)
-            return headers
-        },
-    }) as CustomBaseQuery,
+    baseQuery: baseQueryWithReauth,
     tagTypes: Object.values(TAG_TYPES),
     endpoints: (builder) => ({
-        ...authLoginApi(builder)
+        ...authLoginApi(builder),
+        ...catalogApi(builder),
+        ...bookingApi(builder)
     }),
 })
 
@@ -31,6 +57,13 @@ export const {
     useRegisterMutation,
     useVerify_codeMutation,
     useGetMeQuery,
+    useUpdateMeMutation,
+    useLogoutMutation,
+    useGetMotorcyclesQuery,
+    useGetMotorcycleByIdQuery,
+    useCreateBookingMutation,
+    useGetMyBookingsQuery,
+    useCancelBookingMutation,
 } = api
 
 export type AppApi = typeof api

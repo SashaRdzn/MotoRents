@@ -1,0 +1,40 @@
+.page {
+  min-height: 100vh;
+  background: linear-gradient(180deg, #0a0a0a 0%, #1a1a1a 100%);
+  color: #fff;
+  padding: 40px 20px;
+}
+
+.title {
+  max-width: 1200px;
+  margin: 0 auto 20px;
+  font-size: 2rem;
+  background: linear-gradient(90deg, #ff4500, #ff8c00);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.list {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  gap: 16px;
+}
+
+.card {
+  background: linear-gradient(135deg, #1e1e1e 0%, #2a2a2a 100%);
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+}
+
+.row { display: flex; justify-content: space-between; margin-bottom: 8px; }
+.name { font-weight: bold; }
+.status { opacity: 0.8; }
+.price { font-weight: bold; }
+.actions { display: flex; justify-content: flex-end; }
+.actions button { background: transparent; border: 1px solid #ff8c00; color: #ff8c00; border-radius: 8px; padding: 8px 12px; cursor: pointer; }
+
+.loading { color: #ccc; padding: 40px; text-align: center; }
+
+

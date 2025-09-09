@@ -7,7 +7,7 @@ from datetime import timedelta
 class PhotoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Photo
-        fields = ["image"]
+        fields = ["image", "is_primary"]
 
 
 class MotocycleSerializer(serializers.ModelSerializer):

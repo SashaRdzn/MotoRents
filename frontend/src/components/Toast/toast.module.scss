@@ -1,0 +1,23 @@
+.container {
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  display: grid;
+  gap: 8px;
+  z-index: 2000;
+}
+
+.toast {
+  min-width: 240px;
+  max-width: 360px;
+  padding: 10px 14px;
+  border-radius: 10px;
+  color: #fff;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.35);
+}
+
+.success { background: linear-gradient(90deg, #1e7e34, #28a745); }
+.error { background: linear-gradient(90deg, #b02a37, #dc3545); }
+.info { background: linear-gradient(90deg, #0d6efd, #4dabf7); }
+
+

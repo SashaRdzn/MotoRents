@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models import Q
 from ..users.models import User
 
 
@@ -50,8 +51,19 @@ class Motocycles(models.Model):
 
 # Картинки
 class Photo(models.Model):
-    motorcycle = models.ForeignKey(Motocycles, on_delete=models.CASCADE)
+    motorcycle = models.ForeignKey(Motocycles, on_delete=models.CASCADE, related_name="photos")
     image = models.ImageField(upload_to="motorcycles/")
+    is_primary = models.BooleanField(default=False)
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=["motorcycle"],
+                condition=Q(is_primary=True),
+                name="unique_primary_photo_per_motorcycle",
+            )
+        ]
+        ordering = ["-is_primary", "id"]
 
     def __str__(self):
         return f"{self.motorcycle.brand}----{self.image}"

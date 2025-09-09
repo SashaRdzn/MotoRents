@@ -5,6 +5,10 @@ import Login from '@/pages/Auth/Login/Login'
 import Register from '@/pages/Auth/Register/Register'
 import Catalog from '@/pages/Catalog/Catalog'
 import MotoDetail from '@/pages/MotoDetail/MotoDetail'
+import MyBookings from '@/pages/Bookings/MyBookings'
+import Profile from '@/pages/Profile/Profile'
+import ProtectedRoute from '@/components/ProtectedRoute/ProtectedRoute'
+import NotFound from '@/components/NotFound/NotFound'
 
 export const router = createBrowserRouter([
     {
@@ -14,6 +18,10 @@ export const router = createBrowserRouter([
             {
                 path: '/home',
                 element: <Home />,
+            },
+            {
+                path: '/profile',
+                element: <ProtectedRoute><Profile /></ProtectedRoute>,
             },
             {
                 path: '/auth/register',
@@ -28,8 +36,16 @@ export const router = createBrowserRouter([
                 element: <Catalog />,
             },
             {
+                path: '/bookings',
+                element: <ProtectedRoute><MyBookings /></ProtectedRoute>,
+            },
+            {
                 path: "/motorcycle/:id",
                 element: <MotoDetail />
+            },
+            {
+                path: '*',
+                element: <NotFound />
             }
         ]
     }

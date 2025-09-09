@@ -3,6 +3,9 @@ import { useRegisterMutation, useSend_codeMutation, useVerify_codeMutation } fro
 import { Link, useNavigate } from 'react-router-dom';
 import { CheckEmailOnApproveDomen } from '@/utils/utils';
 import styles from '../login.module.scss';
+import { useDispatch } from 'react-redux';
+import { setTokens, setUser } from '@/app/store/slices/authSlice';
+import { useToast } from '@/components/Toast/ToastProvider';
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -18,6 +21,8 @@ const Register = () => {
   const [register] = useRegisterMutation();
   const [send_code] = useSend_codeMutation();
   const [verify_code] = useVerify_codeMutation();
+  const dispatch = useDispatch();
+  const { show } = useToast();
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = e.target;
@@ -39,6 +44,7 @@ const Register = () => {
       }
 
       await send_code({ email: formData.email }).unwrap();
+      show('Код отправлен на email', 'success');
       setStep(1);
     } catch (err: any) {
       setError(err.data?.message || err.message || 'Не удалось отправить код. Попробуйте позже');
@@ -63,6 +69,7 @@ const Register = () => {
       }).unwrap();
 
       setStep(2);
+      show('Email подтвержден', 'success');
     } catch (err: any) {
       setError(err.data?.message || 'Неверный код подтверждения');
     } finally {
@@ -80,15 +87,25 @@ const Register = () => {
         throw new Error('Пароль должен содержать минимум 8 символов');
       }
 
-      const { token } = await register({
+      const res = await register({
         email: formData.email,
         password: formData.password
       }).unwrap();
 
-      localStorage.setItem('tokenAC', token);
-      navigate('/');
+      const access = (res as any)?.data?.user_token?.access;
+      const refresh = (res as any)?.data?.user_token?.refresh;
+      if (access && refresh) {
+        dispatch(setTokens({ access, refresh }));
+        localStorage.setItem('token_access', access);
+        localStorage.setItem('token_refresh', refresh);
+      }
+      dispatch(setUser({ email: formData.email }));
+      show('Регистрация успешно завершена', 'success');
+      navigate('/home');
     } catch (err: any) {
-      setError(err.data?.message || 'Ошибка регистрации');
+      const msg = err.data?.message || 'Ошибка регистрации';
+      setError(msg);
+      show(msg, 'error');
     } finally {
       setIsLoading(false);
     }

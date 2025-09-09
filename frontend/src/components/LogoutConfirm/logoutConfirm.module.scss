@@ -1,0 +1,51 @@
+.backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1200;
+}
+
+.card {
+    width: min(420px, 92vw);
+    background: #1e1e1e;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.title {
+    margin: 0 0 8px;
+    color: #fff;
+}
+
+.email {
+    margin: 0 0 14px;
+    color: #ddd;
+}
+
+.actions {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+}
+
+.primary {
+    background: linear-gradient(90deg, #ff4500, #ff8c00);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 16px;
+    cursor: pointer;
+}
+
+.secondary {
+    background: transparent;
+    color: #ff8c00;
+    border: 1px solid #ff8c00;
+    border-radius: 8px;
+    padding: 10px 16px;
+    cursor: pointer;
+}

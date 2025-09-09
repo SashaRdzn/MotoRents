@@ -1,23 +1,37 @@
 import { useState } from 'react';
-import { useLoginMutation } from '@api/api';
+import { useLoginMutation, useGetMeQuery } from '@api/api';
 import styles from '../login.module.scss';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { setTokens, setUser } from '@/app/store/slices/authSlice';
+import { useToast } from '@/components/Toast/ToastProvider';
 
 const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [login, { isLoading, error }] = useLoginMutation();
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const { show } = useToast();
 
     
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
-            const { token } = await login({ email, password }).unwrap();
-            localStorage.setItem('tokenAC', token);
-            console.log(token);
-            
+            const res = await login({ email, password }).unwrap();
+            const access = (res as any)?.data?.user_token?.access;
+            const refresh = (res as any)?.data?.user_token?.refresh;
+            if (access && refresh) {
+                dispatch(setTokens({ access, refresh }));
+                localStorage.setItem('token_access', access);
+                localStorage.setItem('token_refresh', refresh);
+            }
+            dispatch(setUser({ email }));
+            show('Успешный вход', 'success');
+            navigate('/home');
         } catch (err) {
             console.error('Login failed:', err);
+            show('Ошибка входа', 'error');
         }
     };
 

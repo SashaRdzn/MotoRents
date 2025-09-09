@@ -66,4 +66,14 @@ export const authLoginApi = (builder: ApiBuilder) => ({
         query: () => '/auth/me',
         providesTags: ['Auth'],
     }),
+
+    updateMe: builder.mutation<{ message: string }, Partial<{ first_name: string; last_name: string; phone: string; driving_experience: number }>>({
+        query: (body) => ({ url: '/auth/me/update', method: 'PATCH', body }),
+        invalidatesTags: ['Auth'],
+    }),
+
+    logout: builder.mutation<{ success: string }, { refresh: string }>({
+        query: (body) => ({ url: '/auth/logout', method: 'POST', body }),
+        invalidatesTags: ['Auth'],
+    }),
 });
