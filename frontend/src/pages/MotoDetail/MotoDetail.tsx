@@ -186,7 +186,7 @@ function MotoDetail() {
       <BookingModal
         isOpen={isOpen}
         onClose={()=>setIsOpen(false)}
-        motorcycleId={mc.id}
+        motorcycleId={mc.name}
         dailyPrice={Number((data as Motorcycle).daily_price)}
         onSubmit={async ({ booking_type, start_time, end_time }) => {
           try {

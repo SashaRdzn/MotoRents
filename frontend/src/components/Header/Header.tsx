@@ -22,7 +22,7 @@ const Header = () => {
         <header className={styles.header}>
             <nav className={styles.navigate}>
                 <div className={styles.leftNav}>
-                    <Link to={'/home'}>Главная</Link>
+                    <Link to={'/'}>Главная</Link>
                     <Link to={'/catalog'}>Каталог</Link>
                 </div>
 

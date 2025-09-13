@@ -51,7 +51,7 @@ export const BookingModal = ({ isOpen, onClose, motorcycleId, dailyPrice, onSubm
     <div className={styles.modalBackdrop} onClick={onClose}>
       <div className={styles.modalCard} onClick={e => e.stopPropagation()}>
         <div className={styles.modalHeader}>
-          <h3>Арендовать мотоцикл #{motorcycleId}</h3>
+          <h3>Арендовать мотоцикл {motorcycleId}</h3>
           <button className={styles.modalClose} onClick={onClose}>✕</button>
         </div>
         <div className={styles.modalBody}>

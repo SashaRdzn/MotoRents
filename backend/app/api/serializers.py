@@ -121,6 +121,21 @@ class BookingCreateSerializer(serializers.ModelSerializer):
         return booking
 
 
+class ReviewSerializer(serializers.ModelSerializer):
+    user = serializers.StringRelatedField(read_only=True)
+    motorcycle = serializers.StringRelatedField(read_only=True)
+    
+    class Meta:
+        model = Review
+        fields = ['id', 'motorcycle', 'user', 'rating', 'comment', 'created_at']
+        read_only_fields = ['id', 'user', 'motorcycle', 'created_at']
+
+    def create(self, validated_data):
+        validated_data['user'] = self.context['request'].user
+        validated_data['motorcycle_id'] = self.context['motorcycle_id']
+        return super().create(validated_data)
+
+
 class BookingDetailSerializer(serializers.ModelSerializer):
     rental_period = RentalPeriodSerializer(read_only=True)
     motorcycle = MotocycleSerializer(read_only=True)

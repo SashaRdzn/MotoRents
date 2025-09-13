@@ -101,7 +101,7 @@ const Register = () => {
       }
       dispatch(setUser({ email: formData.email }));
       show('Регистрация успешно завершена', 'success');
-      navigate('/home');
+      navigate('/');
     } catch (err: any) {
       const msg = err.data?.message || 'Ошибка регистрации';
       setError(msg);

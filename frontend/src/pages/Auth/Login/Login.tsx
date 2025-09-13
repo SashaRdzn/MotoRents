@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useLoginMutation, useGetMeQuery } from '@api/api';
+import { useLoginMutation } from '@api/api';
 import styles from '../login.module.scss';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
@@ -28,7 +28,7 @@ const Login = () => {
             }
             dispatch(setUser({ email }));
             show('Успешный вход', 'success');
-            navigate('/home');
+            navigate('/');
         } catch (err) {
             console.error('Login failed:', err);
             show('Ошибка входа', 'error');
