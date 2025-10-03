@@ -129,19 +129,50 @@ class UserLoginSerializer(serializers.Serializer):
 
 class ProfileUserSerializer(serializers.ModelSerializer):
     user = UserSerializers(read_only=True)
+    avatar_url = serializers.SerializerMethodField()
 
     class Meta:
         model = Profile
-        fields = ["user", "role"]
+        fields = ["user", "role", "avatar", "avatar_url"]
+    
+    def get_avatar_url(self, obj):
+        if obj.avatar:
+            request = self.context.get('request')
+            if request:
+                return request.build_absolute_uri(obj.avatar.url)
+            return obj.avatar.url
+        return None
 
 
 class ProfileUpdateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Profile
-        fields = ["role"]
+        fields = ["role", "avatar"]
+    
+    def validate_role(self, value):
+        # Проверяем, что только суперпользователи могут назначать админские роли
+        if value in Profile.ADMIN_ROLES and not self.context['request'].user.is_superuser:
+            raise serializers.ValidationError("Только суперпользователи могут назначать административные роли")
+        
+        # Разрешаем клиентам выбирать роль арендодателя
+        current_user = self.context['request'].user
+        if current_user.profile.role == 'client' and value == 'landlord':
+            return value
+        
+        # Разрешаем арендодателям возвращаться к роли клиента
+        if current_user.profile.role == 'landlord' and value == 'client':
+            return value
+            
+        return value
 
 
 class UserUpdateSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ["first_name", "last_name", "phone", "driving_experience"]
+
+
+class AvatarUploadSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Profile
+        fields = ["avatar"]

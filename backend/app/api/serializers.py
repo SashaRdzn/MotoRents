@@ -18,6 +18,22 @@ class MotocycleSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 
+class MotocycleCreateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Motocycles
+        fields = [
+            "brand", "model", "year", "category", "engine_volume", 
+            "power", "fuel_type", "transmission", "weight", 
+            "daily_price", "description", "min_rental_hours", 
+            "min_rental_days", "is_public"
+        ]
+    
+    def create(self, validated_data):
+        # Автоматически устанавливаем владельца
+        validated_data['owner'] = self.context['request'].user
+        return super().create(validated_data)
+
+
 class RentalPeriodSerializer(serializers.ModelSerializer):
     class Meta:
         model = RentalPeriod

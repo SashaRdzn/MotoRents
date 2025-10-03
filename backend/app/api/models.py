@@ -38,6 +38,18 @@ class Motocycles(models.Model):
     description = models.TextField()
     min_rental_hours = models.PositiveIntegerField(default=4)
     min_rental_days = models.PositiveIntegerField(default=1)
+    owner = models.ForeignKey(
+        User, 
+        on_delete=models.CASCADE, 
+        related_name='owned_motorcycles',
+        blank=True, 
+        null=True,
+        verbose_name="Владелец"
+    )
+    is_public = models.BooleanField(
+        default=False, 
+        verbose_name="Публичный (в общем каталоге)"
+    )
 
     def is_available_for_period(self, start_time, end_time):
         """Проверяет доступность мотоцикла в указанный период"""

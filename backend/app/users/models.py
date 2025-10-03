@@ -5,6 +5,7 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.utils import timezone
 from datetime import timedelta
+import os
 
 class UserManager(BaseUserManager):
     use_in_migrations = True
@@ -76,6 +77,8 @@ class Profile(models.Model):
         ("manager", "Менеджер"),
         ("client", "Клиент"),
         ("landlord", "Арендодатель"),
+        ("admin", "Администратор"),
+        ("superuser", "Суперпользователь"),
     )
 
     ADMIN_ROLES = ["admin", "superuser"]
@@ -89,24 +92,34 @@ class Profile(models.Model):
     role = models.CharField(
         max_length=30, choices=ROLE_USER, default="client", verbose_name="Роль"
     )
+    avatar = models.ImageField(
+        upload_to='avatars/',
+        blank=True,
+        null=True,
+        verbose_name="Аватар"
+    )
 
     def __str__(self):
         return f"{self.user.email} ({self.get_role_display()})"
 
     def clean(self):
+        # Разрешаем назначение админских ролей только суперпользователям
         if self.role in self.ADMIN_ROLES and not self.user.is_superuser:
-            raise ValidationError("Вы не можете назначать административные роли")
+            raise ValidationError("Только суперпользователи могут иметь административные роли")
 
     def save(self, *args, **kwargs):
+        # Проверяем, что только суперпользователи могут иметь админские роли
         if self.role in self.ADMIN_ROLES and not self.user.is_superuser:
-            raise ValidationError("Нет прав для назначения административных ролей")
+            raise ValidationError("Только суперпользователи могут иметь административные роли")
 
-        self.user._profile_saving = True
-        try:
-            self.user.is_staff = self.role in self.ADMIN_ROLES
-            self.user.save(update_fields=["is_staff"])
-        finally:
-            delattr(self.user, "_profile_saving")
+        # Автоматически устанавливаем is_staff для админских ролей
+        if self.role in self.ADMIN_ROLES:
+            self.user._profile_saving = True
+            try:
+                self.user.is_staff = True
+                self.user.save(update_fields=["is_staff"])
+            finally:
+                delattr(self.user, "_profile_saving")
 
         super().save(*args, **kwargs)
 
@@ -114,4 +127,6 @@ class Profile(models.Model):
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
     if created and not hasattr(instance, "profile"):
-        Profile.objects.create(user=instance)
+        # Автоматически назначаем роль superuser для суперпользователей
+        role = "superuser" if instance.is_superuser else "client"
+        Profile.objects.create(user=instance, role=role)

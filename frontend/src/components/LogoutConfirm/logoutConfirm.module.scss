@@ -3,8 +3,9 @@
     inset: 0;
     background: rgba(0, 0, 0, 0.6);
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     justify-content: center;
+    padding-top: 10vh;
     z-index: 1200;
 }
 

@@ -28,6 +28,41 @@ export const catalogApi = (builder: ApiBuilder) => ({
     query: (id) => ({ url: `/api/motorcycles/${id}` }),
     providesTags: ["Space"],
   }),
+  // API для мотоциклов арендодателя
+  getMyMotorcycles: builder.query<Motorcycle[], void>({
+    query: () => ({ url: "/api/my-motorcycles" }),
+    providesTags: ["Space"],
+  }),
+  createMotorcycle: builder.mutation<Motorcycle, Partial<Motorcycle>>({
+    query: (motorcycle) => ({
+      url: "/api/my-motorcycles",
+      method: "POST",
+      body: motorcycle,
+    }),
+    invalidatesTags: ["Space"],
+  }),
+  updateMotorcycle: builder.mutation<Motorcycle, { id: number; data: Partial<Motorcycle> }>({
+    query: ({ id, data }) => ({
+      url: `/api/my-motorcycles/${id}`,
+      method: "PATCH",
+      body: data,
+    }),
+    invalidatesTags: ["Space"],
+  }),
+  deleteMotorcycle: builder.mutation<void, number>({
+    query: (id) => ({
+      url: `/api/my-motorcycles/${id}`,
+      method: "DELETE",
+    }),
+    invalidatesTags: ["Space"],
+  }),
+  toggleMotorcyclePublic: builder.mutation<{ message: string; is_public: boolean }, number>({
+    query: (id) => ({
+      url: `/api/my-motorcycles/${id}/toggle_public`,
+      method: "POST",
+    }),
+    invalidatesTags: ["Space"],
+  }),
 });
 
 

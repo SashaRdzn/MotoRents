@@ -72,6 +72,20 @@ export const authLoginApi = (builder: ApiBuilder) => ({
         invalidatesTags: ['Auth'],
     }),
 
+    updateRole: builder.mutation<{ message: string }, { role: string }>({
+        query: (body) => ({ url: '/auth/me/role', method: 'PATCH', body }),
+        invalidatesTags: ['Auth'],
+    }),
+
+    uploadAvatar: builder.mutation<{ message: string }, FormData>({
+        query: (formData) => ({
+            url: '/auth/me/avatar',
+            method: 'PATCH',
+            body: formData,
+        }),
+        invalidatesTags: ['Auth'],
+    }),
+
     logout: builder.mutation<{ success: string }, { refresh: string }>({
         query: (body) => ({ url: '/auth/logout', method: 'POST', body }),
         invalidatesTags: ['Auth'],

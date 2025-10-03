@@ -7,6 +7,7 @@ import Catalog from '@/pages/Catalog/Catalog'
 import MotoDetail from '@/pages/MotoDetail/MotoDetail'
 import MyBookings from '@/pages/Bookings/MyBookings'
 import Profile from '@/pages/Profile/Profile'
+import MyMotorcycles from '@/pages/MyMotorcycles/MyMotorcycles'
 import ProtectedRoute from '@/components/ProtectedRoute/ProtectedRoute'
 import NotFound from '@/components/NotFound/NotFound'
 
@@ -38,6 +39,10 @@ export const router = createBrowserRouter([
             {
                 path: '/bookings',
                 element: <ProtectedRoute><MyBookings /></ProtectedRoute>,
+            },
+            {
+                path: '/my-motorcycles',
+                element: <ProtectedRoute><MyMotorcycles /></ProtectedRoute>,
             },
             {
                 path: "/motorcycle/:id",

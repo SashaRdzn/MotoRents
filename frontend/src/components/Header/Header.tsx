@@ -30,6 +30,9 @@ const Header = () => {
                     {isAuthenticated ? (
                         <>
                             <Link to={'/bookings'}>Мои брони</Link>
+                            {role === 'landlord' && (
+                                <Link to={'/my-motorcycles'}>Мои мотоциклы</Link>
+                            )}
                             <Link to={'/profile'}>Профиль</Link>
                             {role === 'admin' && (
                                 <>
