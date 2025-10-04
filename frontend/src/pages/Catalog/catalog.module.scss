@@ -102,6 +102,16 @@
   }
 }
 
+.ownerInfo {
+  margin-bottom: 10px;
+  
+  span {
+    font-size: 0.85rem;
+    color: #ff8c00;
+    font-weight: 500;
+  }
+}
+
 .motorcyclePrice {
   font-size: 1.3rem;
   font-weight: bold;
@@ -109,6 +119,31 @@
   background: linear-gradient(90deg, #ff4500, #ff8c00);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  margin-bottom: 15px;
+}
+
+.unpublishButton {
+  background: #dc3545;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 12px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  width: 100%;
+  margin-top: 10px;
+  
+  &:hover {
+    background: #c82333;
+    transform: translateY(-1px);
+  }
+  
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+  }
 }
 
 .loadingContainer {

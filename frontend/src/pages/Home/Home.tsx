@@ -1,22 +1,24 @@
-import React, { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import styles from './home.module.scss';
 
 function HomePage() {
-  const [activeFaq, setActiveFaq] = useState(null);
-  const faqRefs = useRef([]);
+  const [activeFaq, setActiveFaq] = useState<number | null>(null);
+  const faqRefs = useRef<(HTMLDivElement | null)[]>([]);
 
-  const toggleFaq = (index) => {
+  const toggleFaq = (index: number) => {
     setActiveFaq(activeFaq === index ? null : index);
   };
 
   // Функция для получения элементов под текущим
-  const getElementsBelow = (index) => {
+  const getElementsBelow = (index: number): HTMLDivElement[] => {
     if (!faqRefs.current[index]) return [];
     
     const currentElement = faqRefs.current[index];
+    if (!currentElement) return [];
+    
     const currentRect = currentElement.getBoundingClientRect();
-    const elementsBelow = [];
+    const elementsBelow: HTMLDivElement[] = [];
     
     faqRefs.current.forEach((ref, i) => {
       if (ref && i !== index) {
@@ -340,7 +342,7 @@ function HomePage() {
             {faqs.map((faq, index) => (
               <div 
                 key={index}
-                ref={el => faqRefs.current[index] = el}
+                ref={el => { faqRefs.current[index] = el; }}
                 className={`${styles.faqItem} ${activeFaq === index ? styles.active : ''}`}
                 onClick={() => toggleFaq(index)}
               >

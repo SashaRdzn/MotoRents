@@ -18,6 +18,17 @@ class MotorcycleViewSet(viewsets.ModelViewSet):
     serializer_class = MotocycleSerializer
     http_method_names = ["get", "post", "put", "patch"]
     permission_classes = [IsAuthenticated]
+    
+    def get_permissions(self):
+        """
+        Устанавливаем права доступа в зависимости от действия.
+        Для просмотра каталога и деталей мотоцикла не требуется аутентификация.
+        """
+        if self.action in ['list', 'retrieve']:
+            permission_classes = []  # Без аутентификации для просмотра каталога и деталей
+        else:
+            permission_classes = [IsAuthenticated]
+        return [permission() for permission in permission_classes]
 
     def get_serializer_class(self):
         if self.action == 'create':
@@ -28,8 +39,12 @@ class MotorcycleViewSet(viewsets.ModelViewSet):
         """Фильтруем мотоциклы в зависимости от роли пользователя"""
         user = self.request.user
         
-        # Если это запрос на каталог (публичные мотоциклы)
-        if self.action == 'list' and not self.request.path.endswith('/my-motorcycles/'):
+        # Если это запрос на каталог или детали (публичные мотоциклы)
+        if self.action in ['list', 'retrieve'] and not self.request.path.endswith('/my-motorcycles/'):
+            return Motocycles.objects.filter(is_available=True, is_public=True).prefetch_related("photos")
+        
+        # Если пользователь не аутентифицирован, показываем только публичные мотоциклы
+        if not user.is_authenticated:
             return Motocycles.objects.filter(is_available=True, is_public=True).prefetch_related("photos")
         
         # Если пользователь - арендодатель, показываем его мотоциклы

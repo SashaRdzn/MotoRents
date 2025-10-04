@@ -69,7 +69,9 @@ const Login = () => {
 
                     {error && (
                         <div className={styles.error}>
-                            {'data' in error ? error?.data?.message : 'Ошибка входа'}
+                            {'data' in error && error.data && typeof error.data === 'object' && 'message' in error.data 
+                                ? (error.data as any).message 
+                                : 'Ошибка входа'}
                         </div>
                     )}
 

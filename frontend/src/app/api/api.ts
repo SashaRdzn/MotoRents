@@ -68,6 +68,7 @@ export const {
     useUpdateMotorcycleMutation,
     useDeleteMotorcycleMutation,
     useToggleMotorcyclePublicMutation,
+    useUnpublishMotorcycleMutation,
     useCreateBookingMutation,
     useGetMyBookingsQuery,
     useCancelBookingMutation,

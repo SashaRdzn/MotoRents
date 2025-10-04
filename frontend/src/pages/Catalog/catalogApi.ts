@@ -17,6 +17,7 @@ export interface Motorcycle {
   min_rental_hours: number;
   min_rental_days: number;
   photos?: { image: string }[];
+  owner_email?: string;
 }
 
 export const catalogApi = (builder: ApiBuilder) => ({
@@ -59,6 +60,13 @@ export const catalogApi = (builder: ApiBuilder) => ({
   toggleMotorcyclePublic: builder.mutation<{ message: string; is_public: boolean }, number>({
     query: (id) => ({
       url: `/api/my-motorcycles/${id}/toggle_public`,
+      method: "POST",
+    }),
+    invalidatesTags: ["Space"],
+  }),
+  unpublishMotorcycle: builder.mutation<{ message: string }, number>({
+    query: (id) => ({
+      url: `/api/motorcycles/${id}/unpublish`,
       method: "POST",
     }),
     invalidatesTags: ["Space"],

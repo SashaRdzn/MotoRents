@@ -1,10 +1,10 @@
 import { Navigate } from 'react-router-dom'
-// import { JSX } from 'react'
 import { useSelector } from 'react-redux'
 import type { RootState } from '@/app/store/store'
+import type { ReactElement } from 'react'
 
 type Props = {
-  children: JSX.Element
+  children: ReactElement
   requireAdmin?: boolean
 }
 

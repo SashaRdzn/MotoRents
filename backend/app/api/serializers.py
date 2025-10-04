@@ -12,6 +12,7 @@ class PhotoSerializer(serializers.ModelSerializer):
 
 class MotocycleSerializer(serializers.ModelSerializer):
     photos = PhotoSerializer(many=True, read_only=True)
+    owner_email = serializers.EmailField(source='owner.email', read_only=True)
 
     class Meta:
         model = Motocycles

@@ -1,12 +1,16 @@
 import { useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import styles from './catalog.module.scss';
-import { useGetMotorcyclesQuery } from '@/app/api/api';
+import { useGetMotorcyclesQuery, useUnpublishMotorcycleMutation, useGetMeQuery } from '@/app/api/api';
 import type { Motorcycle } from './catalogApi';
+import { useToast } from '@/components/Toast/ToastProvider';
 const serverUrl = import.meta.env.VITE_SERVER_URL || '';
 
 function CatalogPage() {
   const { data, isLoading, isFetching } = useGetMotorcyclesQuery();
+  const { data: userData } = useGetMeQuery();
+  const [unpublishMotorcycle, { isLoading: isUnpublishing }] = useUnpublishMotorcycleMutation();
+  const { show } = useToast();
 
   const motorcycles = useMemo(() => {
     const items = (data ?? []) as Motorcycle[];
@@ -22,6 +26,20 @@ function CatalogPage() {
         : '/mainFon.jpg',
     }));
   }, [data]);
+
+  const isAdmin = (userData as any)?.user?.role === 'admin' || (userData as any)?.user?.role === 'superuser';
+
+  const handleUnpublish = async (motorcycleId: number, event: React.MouseEvent) => {
+    event.preventDefault();
+    event.stopPropagation();
+    
+    try {
+      await unpublishMotorcycle(motorcycleId).unwrap();
+      show('Мотоцикл убран из каталога', 'success');
+    } catch (error) {
+      show('Не удалось убрать мотоцикл из каталога', 'error');
+    }
+  };
 
   return (
     <div className={styles.catalog}>
@@ -88,9 +106,23 @@ function CatalogPage() {
                       <span>Мощность: {motorcycle.power}</span>
                       <span>Двигатель: {motorcycle.engine}</span>
                     </div>
+                    {/* {(data as any)?.find((m: any) => m.id === motorcycle.id)?.owner_email && (
+                      <div className={styles.ownerInfo}>
+                        <span>Владелец: {(data as any).find((m: any) => m.id === motorcycle.id)?.owner_email}</span>
+                      </div>
+                    )} */}
                     <div className={styles.motorcyclePrice}>
                       {motorcycle.price}
                     </div>
+                    {isAdmin && (
+                      <button 
+                        className={styles.unpublishButton}
+                        onClick={(e) => handleUnpublish(motorcycle.id, e)}
+                        disabled={isUnpublishing}
+                      >
+                        {isUnpublishing ? 'Убираем...' : 'Убрать из каталога'}
+                      </button>
+                    )}
                   </div>
                 </Link>
               </div>
@@ -148,9 +180,23 @@ function CatalogPage() {
                       <span>Мощность: {motorcycle.power}</span>
                       <span>Двигатель: {motorcycle.engine}</span>
                     </div>
+                    {/* {(data as any)?.find((m: any) => m.id === motorcycle.id)?.owner_email && (
+                      <div className={styles.ownerInfo}>
+                        <span>Владелец: {(data as any).find((m: any) => m.id === motorcycle.id)?.owner_email}</span>
+                      </div>
+                    )} */}
                     <div className={styles.motorcyclePrice}>
                       {motorcycle.price}
                     </div>
+                    {isAdmin && (
+                      <button 
+                        className={styles.unpublishButton}
+                        onClick={(e) => handleUnpublish(motorcycle.id, e)}
+                        disabled={isUnpublishing}
+                      >
+                        {isUnpublishing ? 'Убираем...' : 'Убрать из каталога'}
+                      </button>
+                    )}
                   </div>
                 </Link>
               </div>

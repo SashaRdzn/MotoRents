@@ -173,6 +173,10 @@ function MotoDetail() {
                 <li>Топливо: {(data as Motorcycle).fuel_type}</li>
                 <li>Трансмиссия: {(data as Motorcycle).transmission}</li>
                 <li>Мин. аренда: {(data as Motorcycle).min_rental_hours} ч / {(data as Motorcycle).min_rental_days} дн</li>
+                {/* TODO сделать норм переход на старницу профиля */}
+                {(data as Motorcycle).owner_email && (
+                  <li>Владелец: <Link to={`/users/${(data as Motorcycle).owner_email}`}>{(data as Motorcycle).owner_email}</Link></li>
+                )}
               </ul>
             </div>
 
@@ -186,7 +190,7 @@ function MotoDetail() {
       <BookingModal
         isOpen={isOpen}
         onClose={()=>setIsOpen(false)}
-        motorcycleId={mc.name}
+        motorcycleId={mc.id}
         dailyPrice={Number((data as Motorcycle).daily_price)}
         onSubmit={async ({ booking_type, start_time, end_time }) => {
           try {

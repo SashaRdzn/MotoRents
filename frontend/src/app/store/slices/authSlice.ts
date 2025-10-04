@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { createSlice, type PayloadAction } from '@reduxjs/toolkit'
 
 interface AuthState {
     isAuthenticated: boolean
@@ -7,12 +7,20 @@ interface AuthState {
     user: null | { name?: string; email: string; role?: string }
 }
 
-const initialState: AuthState = {
-    isAuthenticated: false,
-    tokenAc: null,
-    tokenRef: null,
-    user: null
-}
+// Инициализация из localStorage
+const getInitialState = (): AuthState => {
+    const tokenAc = localStorage.getItem('token_access');
+    const tokenRef = localStorage.getItem('token_refresh');
+    
+    return {
+        isAuthenticated: !!(tokenAc && tokenRef),
+        tokenAc,
+        tokenRef,
+        user: null
+    };
+};
+
+const initialState: AuthState = getInitialState();
 
 const authSlice = createSlice({
     name: 'auth',

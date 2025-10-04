@@ -107,30 +107,41 @@ const Profile = () => {
       {/* Выбор роли */}
       <div className={styles.roleSection}>
         <h3>Роль</h3>
-        <div className={styles.roleButtons}>
-          <button 
-            type="button"
-            className={`${styles.roleButton} ${selectedRole === 'client' ? styles.active : ''}`}
-            onClick={() => handleRoleChange('client')}
-            disabled={isRoleLoading}
-          >
-            Клиент
-          </button>
-          <button 
-            type="button"
-            className={`${styles.roleButton} ${selectedRole === 'landlord' ? styles.active : ''}`}
-            onClick={() => handleRoleChange('landlord')}
-            disabled={isRoleLoading}
-          >
-            Арендодатель
-          </button>
-        </div>
-        <p className={styles.roleDescription}>
-          {selectedRole === 'client' 
-            ? 'Как клиент вы можете арендовать мотоциклы' 
-            : 'Как арендодатель вы можете добавлять свои мотоциклы для аренды'
-          }
-        </p>
+        {(data as any)?.user?.role === 'admin' || (data as any)?.user?.role === 'superuser' ? (
+          <div className={styles.adminRole}>
+            <div className={styles.adminBadge}>Администратор</div>
+            <p className={styles.roleDescription}>
+              У вас есть полный доступ ко всем функциям системы
+            </p>
+          </div>
+        ) : (
+          <>
+            <div className={styles.roleButtons}>
+              <button 
+                type="button"
+                className={`${styles.roleButton} ${selectedRole === 'client' ? styles.active : ''}`}
+                onClick={() => handleRoleChange('client')}
+                disabled={isRoleLoading}
+              >
+                Клиент
+              </button>
+              <button 
+                type="button"
+                className={`${styles.roleButton} ${selectedRole === 'landlord' ? styles.active : ''}`}
+                onClick={() => handleRoleChange('landlord')}
+                disabled={isRoleLoading}
+              >
+                Арендодатель
+              </button>
+            </div>
+            <p className={styles.roleDescription}>
+              {selectedRole === 'client' 
+                ? 'Как клиент вы можете арендовать мотоциклы' 
+                : 'Как арендодатель вы можете добавлять свои мотоциклы для аренды'
+              }
+            </p>
+          </>
+        )}
       </div>
 
       <form className={styles.form} onSubmit={submit}>
