@@ -26,7 +26,7 @@ SECRET_KEY = "django-insecure-be!(zb#+*)9#x%4x(a-pb)3vi@o6$5frzh+-a=)$zt##p9du8#
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['*', 'https://motorents.onrender.com', "http://motorents.onrender.com"]
 
 
 # ТОЛЬКО ДЛЯ РАЗРАБОТКИ!!!
