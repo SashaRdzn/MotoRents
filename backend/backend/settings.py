@@ -26,12 +26,27 @@ SECRET_KEY = "django-insecure-be!(zb#+*)9#x%4x(a-pb)3vi@o6$5frzh+-a=)$zt##p9du8#
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*', 'https://motorents.onrender.com', "http://motorents.onrender.com"]
+ALLOWED_HOSTS = ['*', 'https://motorents.onrender.com', "http://motorents.onrender.com", 'motorents.onrender.com',
+    'www.motorents.onrender.com',]
 
+CSRF_TRUSTED_ORIGINS = [
+    'https://motorents.onrender.com',
+    'https://www.motorents.onrender.com',
+]
+
+# Или для разработки
+CSRF_TRUSTED_ORIGINS = [
+    'http://localhost:8000',
+    'http://127.0.0.1:8000',
+    'https://motorents.onrender.com',
+]
+
+SESSION_COOKIE_DOMAIN = '.motorents.onrender.com'
+CSRF_COOKIE_DOMAIN = '.motorents.onrender.com'
 
 # ТОЛЬКО ДЛЯ РАЗРАБОТКИ!!!
 CORS_ALLOW_ALL_ORIGINS = True
-#
+
 
 
 INSTALLED_APPS = [
