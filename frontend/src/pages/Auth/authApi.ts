@@ -90,4 +90,9 @@ export const authLoginApi = (builder: ApiBuilder) => ({
         query: (body) => ({ url: '/auth/logout', method: 'POST', body }),
         invalidatesTags: ['Auth'],
     }),
+
+    updateTheme: builder.mutation<{ message: string }, { theme: 'dark' | 'light' }>({
+        query: (body) => ({ url: '/auth/me/theme', method: 'PATCH', body }),
+        invalidatesTags: ['Auth'],
+    }),
 });

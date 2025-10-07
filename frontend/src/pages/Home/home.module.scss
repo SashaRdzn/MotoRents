@@ -1,7 +1,7 @@
 // home.module.scss
 .homePage {
-  background: linear-gradient(180deg, #0a0a0a 0%, #1a1a1a 100%);
-  color: #ffffff;
+  background: var(--bg-primary);
+  color: var(--text-main);
 }
 
 .container {
@@ -17,7 +17,7 @@
   align-items: center;
   justify-content: center;
   position: relative;
-  background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+  background: var(--bg-primary);
   
   &::before {
     content: '';

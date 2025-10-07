@@ -2,10 +2,10 @@
     display: flex;
     align-items: center;
     min-height: 100vh;
-    background: linear-gradient(180deg, #0a0a0a 0%, #1a1a1a 100%);
+    background: var(--bg-primary);
     position: relative;
     isolation: isolate;
-    color: white;
+    color: var(--text-main);
 }
 
 .login::before {
@@ -27,10 +27,11 @@
     margin-left: 5rem;
     width: 100%;
     max-width: 450px;
-    background: linear-gradient(135deg, #1e1e1e 0%, #2a2a2a 100%);
+    background: var(--card-bg);
     border-radius: 15px;
     padding: 28px;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+    box-shadow: var(--shadow-primary);
+    border: 1px solid var(--border-color);
 }
 
 .title {
@@ -65,9 +66,9 @@
 .input {
     padding: 0.8rem 1rem;
     border-radius: 8px;
-    border: none;
-    background-color: #0f0f0f;
-    color: white;
+    border: 1px solid var(--border-color);
+    background-color: var(--bg-secondary);
+    color: var(--text-main);
     font-size: 1rem;
     transition: all 0.2s ease;
     outline: none;
@@ -118,14 +119,13 @@
 
 
 .link {
-    color: #ff2600e2;
+    color: var(--accent-warm);
     text-decoration: none;
     text-decoration: underline 1px solid;
 
     &:hover {
         text-decoration: underline;
-        color: #856d69;
-
+        color: var(--accent-neutral);
     }
 }
 
@@ -136,8 +136,9 @@
 }
 
 .emailDisplay {
-    background: rgba(255,255,255,0.06);
-    border: 1px solid rgba(255, 140, 0, 0.25);
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
     padding: 10px 12px;
     border-radius: 8px;
+    color: var(--text-main);
 }

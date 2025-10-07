@@ -6,9 +6,10 @@ import { useToast } from '@/components/Toast/ToastProvider'
 interface AddMotorcycleModalProps {
   onClose: () => void
   onSuccess: () => void
+  userRole?: 'landlord' | 'admin'
 }
 
-const AddMotorcycleModal = ({ onClose, onSuccess }: AddMotorcycleModalProps) => {
+const AddMotorcycleModal = ({ onClose, onSuccess, userRole = 'landlord' }: AddMotorcycleModalProps) => {
   const { show } = useToast()
   const [createMotorcycle, { isLoading }] = useCreateMotorcycleMutation()
   const [form, setForm] = useState({
@@ -25,15 +26,47 @@ const AddMotorcycleModal = ({ onClose, onSuccess }: AddMotorcycleModalProps) => 
     description: '',
     min_rental_hours: 4,
     min_rental_days: 1,
-    is_public: false
+    is_public: userRole === 'admin' // Админы по умолчанию создают публичные мотоциклы
   })
+  const [photos, setPhotos] = useState<File[]>([])
+  const [primaryPhotoIndex, setPrimaryPhotoIndex] = useState<number>(0)
+
+  const handlePhotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = Array.from(e.target.files || [])
+    setPhotos(prev => [...prev, ...files])
+  }
+
+  const removePhoto = (index: number) => {
+    setPhotos(prev => prev.filter((_, i) => i !== index))
+    if (primaryPhotoIndex >= index && primaryPhotoIndex > 0) {
+      setPrimaryPhotoIndex(prev => prev - 1)
+    } else if (primaryPhotoIndex >= photos.length - 1) {
+      setPrimaryPhotoIndex(0)
+    }
+  }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
 
     try {
-      await createMotorcycle(form).unwrap()
+      const formData = new FormData()
+      
+      // Добавляем все поля формы
+      Object.entries(form).forEach(([key, value]) => {
+        formData.append(key, value.toString())
+      })
+
+      // Добавляем фотографии
+      photos.forEach((photo, index) => {
+        formData.append('photos', photo)
+        if (index === primaryPhotoIndex) {
+          formData.append('primary_photo_index', index.toString())
+        }
+      })
+
+      await createMotorcycle(formData).unwrap()
       onSuccess()
+      show('Мотоцикл успешно добавлен!', 'success')
     } catch (e: any) {
       show(e.data?.detail || 'Не удалось добавить мотоцикл', 'error')
     }
@@ -202,6 +235,51 @@ const AddMotorcycleModal = ({ onClose, onSuccess }: AddMotorcycleModalProps) => 
               placeholder="Опишите состояние мотоцикла, особенности, условия аренды..."
               rows={4}
             />
+          </div>
+
+          {/* Секция загрузки фотографий */}
+          <div className={styles.formGroup}>
+            <label>Фотографии мотоцикла</label>
+            <input
+              type="file"
+              accept="image/*"
+              multiple
+              onChange={handlePhotoChange}
+              className={styles.fileInput}
+            />
+            
+            {photos.length > 0 && (
+              <div className={styles.photosPreview}>
+                <h4>Загруженные фотографии:</h4>
+                <div className={styles.photosGrid}>
+                  {photos.map((photo, index) => (
+                    <div key={index} className={styles.photoItem}>
+                      <img 
+                        src={URL.createObjectURL(photo)} 
+                        alt={`Preview ${index + 1}`}
+                        className={styles.photoPreview}
+                      />
+                      <div className={styles.photoActions}>
+                        <button
+                          type="button"
+                          className={`${styles.primaryButton} ${primaryPhotoIndex === index ? styles.active : ''}`}
+                          onClick={() => setPrimaryPhotoIndex(index)}
+                        >
+                          {primaryPhotoIndex === index ? 'Главная' : 'Сделать главной'}
+                        </button>
+                        <button
+                          type="button"
+                          className={styles.removeButton}
+                          onClick={() => removePhoto(index)}
+                        >
+                          Удалить
+                        </button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
 
           <div className={styles.formGroup}>

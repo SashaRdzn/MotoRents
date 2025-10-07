@@ -10,7 +10,6 @@ function HomePage() {
     setActiveFaq(activeFaq === index ? null : index);
   };
 
-  // Функция для получения элементов под текущим
   const getElementsBelow = (index: number): HTMLDivElement[] => {
     if (!faqRefs.current[index]) return [];
     
@@ -23,7 +22,6 @@ function HomePage() {
     faqRefs.current.forEach((ref, i) => {
       if (ref && i !== index) {
         const rect = ref.getBoundingClientRect();
-        // Проверяем, находится ли элемент ниже и в той же колонке
         if (rect.top > currentRect.bottom && 
             Math.abs(rect.left - currentRect.left) < 50) {
           elementsBelow.push(ref);
@@ -34,20 +32,17 @@ function HomePage() {
     return elementsBelow;
   };
 
-  // Эффект для применения трансформации к элементам ниже
   useEffect(() => {
     if (activeFaq !== null) {
       const elementsBelow = getElementsBelow(activeFaq);
       const currentElement = faqRefs.current[activeFaq];
       const expandedHeight = currentElement?.scrollHeight || 0;
       
-      // Применяем трансформацию к элементам ниже
       elementsBelow.forEach(element => {
         element.style.transform = `translateY(${expandedHeight}px)`;
         element.style.transition = 'transform 0.3s ease';
       });
       
-      // Очищаем трансформацию при закрытии
       return () => {
         elementsBelow.forEach(element => {
           element.style.transform = 'translateY(0)';
@@ -56,7 +51,6 @@ function HomePage() {
     }
   }, [activeFaq]);
 
-  // Преимущества
   const advantages = [
     {
       title: "Лучший выбор",
@@ -81,6 +75,8 @@ function HomePage() {
   ];
 
   // Популярные мотоциклы для карусели
+  // console.log();
+  
   const carouselMotorcycles = [
     {
       id: 1,

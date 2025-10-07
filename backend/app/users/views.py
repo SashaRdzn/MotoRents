@@ -21,6 +21,7 @@ from .serializers import (
     CodeVerificationSerializer,
     UserRegistrationSerializer,
     AvatarUploadSerializer,
+    ThemeUpdateSerializer,
 )
 
 from .models import EmailConfirmation, User, Profile
@@ -230,6 +231,14 @@ class AvatarUploadView(UpdateAPIView):
 
 class UpdateMyRoleView(UpdateAPIView):
     serializer_class = ProfileUpdateSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_object(self):
+        return self.request.user.profile
+
+
+class UpdateThemeView(UpdateAPIView):
+    serializer_class = ThemeUpdateSerializer
     permission_classes = [IsAuthenticated]
 
     def get_object(self):

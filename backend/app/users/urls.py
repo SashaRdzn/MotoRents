@@ -12,6 +12,7 @@ from .views import (
     VerifyCodeView,
     AvatarUploadView,
     UpdateMyRoleView,
+    UpdateThemeView,
 )
 
 
@@ -41,6 +42,7 @@ urlpatterns = [
     path("me/update", UpdateUserProfileView.as_view(), name="update-profile"),
     path("me/avatar", AvatarUploadView.as_view(), name="upload-avatar"),
     path("me/role", UpdateMyRoleView.as_view(), name="update-my-role"),
+    path("me/theme", UpdateThemeView.as_view(), name="update-theme"),
     path("me", ProfileUserMe.as_view()),
 
 

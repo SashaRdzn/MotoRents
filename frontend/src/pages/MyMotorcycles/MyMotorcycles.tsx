@@ -7,7 +7,7 @@ import {
 } from '@/app/api/api'
 import styles from './myMotorcycles.module.scss'
 import { useToast } from '@/components/Toast/ToastProvider'
-import AddMotorcycleModal from './AddMotorcycleModal'
+import AddMotorcycleModal from '@/components/AddMotorcycleModal/AddMotorcycleModal'
 import type { RootState } from '@/app/store/store'
 
 const MyMotorcycles = () => {
@@ -142,8 +142,8 @@ const MyMotorcycles = () => {
           onSuccess={() => {
             setShowAddModal(false)
             refetch()
-            show('Мотоцикл добавлен', 'success')
           }}
+          userRole={isAdmin ? 'admin' : 'landlord'}
         />
       )}
     </section>

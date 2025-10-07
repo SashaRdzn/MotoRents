@@ -34,11 +34,11 @@ export const catalogApi = (builder: ApiBuilder) => ({
     query: () => ({ url: "/api/my-motorcycles" }),
     providesTags: ["Space"],
   }),
-  createMotorcycle: builder.mutation<Motorcycle, Partial<Motorcycle>>({
-    query: (motorcycle) => ({
+  createMotorcycle: builder.mutation<Motorcycle, FormData | Partial<Motorcycle>>({
+    query: (data) => ({
       url: "/api/my-motorcycles",
       method: "POST",
-      body: motorcycle,
+      body: data,
     }),
     invalidatesTags: ["Space"],
   }),

@@ -133,7 +133,7 @@ class ProfileUserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Profile
-        fields = ["user", "role", "avatar", "avatar_url"]
+        fields = ["user", "role", "avatar", "avatar_url", "theme"]
     
     def get_avatar_url(self, obj):
         if obj.avatar:
@@ -147,7 +147,7 @@ class ProfileUserSerializer(serializers.ModelSerializer):
 class ProfileUpdateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Profile
-        fields = ["role", "avatar"]
+        fields = ["role", "avatar", "theme"]
     
     def validate_role(self, value):
         # Проверяем, что только суперпользователи могут назначать админские роли
@@ -176,3 +176,9 @@ class AvatarUploadSerializer(serializers.ModelSerializer):
     class Meta:
         model = Profile
         fields = ["avatar"]
+
+
+class ThemeUpdateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Profile
+        fields = ["theme"]

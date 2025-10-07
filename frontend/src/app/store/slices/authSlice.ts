@@ -4,7 +4,7 @@ interface AuthState {
     isAuthenticated: boolean
     tokenAc: null | string
     tokenRef: null | string
-    user: null | { name?: string; email: string; role?: string }
+    user: null | { name?: string; email: string; role?: string; theme?: string }
 }
 
 // Инициализация из localStorage
@@ -31,8 +31,8 @@ const authSlice = createSlice({
             state.tokenAc = action.payload.access
             state.tokenRef = action.payload.refresh
         },
-        setUser(state, action: PayloadAction<{ name?: string; email: string; role?: string } | null>) {
-            state.user = action.payload ? { name: action.payload.name, email: action.payload.email, role: action.payload.role } : null
+        setUser(state, action: PayloadAction<{ name?: string; email: string; role?: string; theme?: string } | null>) {
+            state.user = action.payload ? { name: action.payload.name, email: action.payload.email, role: action.payload.role, theme: action.payload.theme } : null
         },
         logout(state) {
             state.isAuthenticated = false

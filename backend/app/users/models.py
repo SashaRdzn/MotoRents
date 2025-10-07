@@ -98,6 +98,12 @@ class Profile(models.Model):
         null=True,
         verbose_name="Аватар"
     )
+    theme = models.CharField(
+        max_length=10,
+        choices=[('dark', 'Темная'), ('light', 'Светлая')],
+        default='dark',
+        verbose_name="Тема"
+    )
 
     def __str__(self):
         return f"{self.user.email} ({self.get_role_display()})"

@@ -1,8 +1,8 @@
 // MotorcycleDetailPage.module.scss
 .detailPage {
   min-height: 100vh;
-  background: linear-gradient(180deg, #0a0a0a 0%, #1a1a1a 100%);
-  color: #ffffff;
+  background: var(--bg-primary);
+  color: var(--text-main);
   padding: 40px 20px;
 }
 
@@ -17,7 +17,7 @@
   .backLink {
     display: inline-block;
     margin-bottom: 15px;
-    color: #ff8c00;
+    color: var(--accent-warm);
     text-decoration: none;
     font-size: 1.1rem;
     transition: color 0.3s ease;
@@ -87,12 +87,12 @@
     h3 {
       font-size: 1.5rem;
       margin-bottom: 15px;
-      color: #ff8c00;
+      color: var(--accent-warm);
     }
     
     p {
       line-height: 1.6;
-      color: #cccccc;
+      color: var(--text-secondary);
     }
   }
   
@@ -102,7 +102,7 @@
     h3 {
       font-size: 1.5rem;
       margin-bottom: 15px;
-      color: #ff8c00;
+      color: var(--accent-warm);
     }
     
     .specsGrid {
@@ -112,21 +112,22 @@
     }
     
     .specItem {
-      background: linear-gradient(135deg, #1e1e1e 0%, #2a2a2a 100%);
+      background: var(--card-bg);
       border-radius: 10px;
       padding: 15px;
+      border: 1px solid var(--border-color);
       
       .specLabel {
         display: block;
         font-size: 0.9rem;
-        color: #888888;
+        color: var(--text-secondary);
         margin-bottom: 5px;
       }
       
       .specValue {
         font-size: 1.1rem;
         font-weight: bold;
-        color: #ffffff;
+        color: var(--text-main);
       }
     }
   }
@@ -137,7 +138,7 @@
     h3 {
       font-size: 1.5rem;
       margin-bottom: 15px;
-      color: #ff8c00;
+      color: var(--accent-warm);
     }
     
     ul {
@@ -149,7 +150,7 @@
         padding-left: 25px;
         margin-bottom: 10px;
         line-height: 1.6;
-        color: #cccccc;
+        color: var(--text-secondary);
         
         &:before {
           content: '▸';
@@ -188,8 +189,8 @@
     
     .favoritesButton {
       background: transparent;
-      color: #ff8c00;
-      border: 2px solid #ff8c00;
+      color: var(--accent-warm);
+      border: 2px solid var(--accent-warm);
       
       &:hover {
         background: rgba(255, 140, 0, 0.1);

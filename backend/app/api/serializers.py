@@ -20,19 +20,42 @@ class MotocycleSerializer(serializers.ModelSerializer):
 
 
 class MotocycleCreateSerializer(serializers.ModelSerializer):
+    photos = serializers.ListField(
+        child=serializers.ImageField(),
+        write_only=True,
+        required=False
+    )
+    primary_photo_index = serializers.IntegerField(write_only=True, required=False)
+    
     class Meta:
         model = Motocycles
         fields = [
             "brand", "model", "year", "category", "engine_volume", 
             "power", "fuel_type", "transmission", "weight", 
             "daily_price", "description", "min_rental_hours", 
-            "min_rental_days", "is_public"
+            "min_rental_days", "is_public", "photos", "primary_photo_index"
         ]
     
     def create(self, validated_data):
+        # Извлекаем данные о фотографиях
+        photos_data = validated_data.pop('photos', [])
+        primary_photo_index = validated_data.pop('primary_photo_index', 0)
+        
         # Автоматически устанавливаем владельца
         validated_data['owner'] = self.context['request'].user
-        return super().create(validated_data)
+        
+        # Создаем мотоцикл
+        motorcycle = super().create(validated_data)
+        
+        # Создаем фотографии
+        for index, photo_data in enumerate(photos_data):
+            Photo.objects.create(
+                motorcycle=motorcycle,
+                image=photo_data,
+                is_primary=(index == primary_photo_index)
+            )
+        
+        return motorcycle
 
 
 class RentalPeriodSerializer(serializers.ModelSerializer):

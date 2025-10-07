@@ -6,6 +6,7 @@ import type { RootState } from './store/store';
 import { setTokens } from './store/slices/authSlice';
 import { useGetMeQuery } from './api/api';
 import { setUser } from './store/slices/authSlice';
+import { initializeTheme } from './store/slices/themeSlice';
 import { ToastProvider } from '@/components/Toast/ToastProvider';
 
 
@@ -21,12 +22,15 @@ export function App() {
         dispatch(setTokens({ access, refresh }))
       }
     }
+    // Инициализируем тему при загрузке приложения
+    dispatch(initializeTheme())
   },[])
   useEffect(()=>{
     const role = (meData as any)?.user?.role || (meData as any)?.role
     const email = (meData as any)?.user?.email || (meData as any)?.user_email
-    if (email || role) {
-      dispatch(setUser({ email, role }))
+    const theme = (meData as any)?.theme
+    if (email || role || theme) {
+      dispatch(setUser({ email, role, theme }))
     }
   }, [meData])
   return (

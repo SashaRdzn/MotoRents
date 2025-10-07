@@ -1,7 +1,7 @@
 .page {
   min-height: 100vh;
-  background: linear-gradient(180deg, #0a0a0a 0%, #1a1a1a 100%);
-  color: #fff;
+  background: var(--bg-primary);
+  color: var(--text-main);
   padding: 40px 20px;
 }
 .title {
@@ -19,21 +19,21 @@
   gap: 12px;
 }
 .form label { display: grid; gap: 6px; }
-.form input { background: #0f0f0f; color: #fff; border: 1px solid #333; border-radius: 8px; padding: 10px 12px; }
+.form input { background: var(--card-bg); color: var(--text-main); border: 1px solid var(--border-color); border-radius: 8px; padding: 10px 12px; }
 .form button { justify-self: start; background: linear-gradient(90deg, #ff4500, #ff8c00); color: #fff; border: none; border-radius: 8px; padding: 10px 16px; cursor: pointer; }
 
 .roleSection {
   max-width: 800px;
   margin: 0 auto 30px;
   padding: 20px;
-  background: #1a1a1a;
+  background: var(--card-bg);
   border-radius: 12px;
-  border: 1px solid #333;
+  border: 1px solid var(--border-color);
 }
 
 .roleSection h3 {
   margin: 0 0 16px;
-  color: #fff;
+  color: var(--text-main);
   font-size: 1.2rem;
 }
 
@@ -44,9 +44,9 @@
 }
 
 .roleButton {
-  background: #2a2a2a;
-  color: #ccc;
-  border: 1px solid #444;
+  background: var(--bg-secondary);
+  color: var(--text-secondary);
+  border: 1px solid var(--border-color);
   border-radius: 8px;
   padding: 12px 20px;
   cursor: pointer;
@@ -55,8 +55,8 @@
 }
 
 .roleButton:hover {
-  background: #333;
-  border-color: #555;
+  background: var(--accent-neutral);
+  border-color: var(--accent-warm);
 }
 
 .roleButton.active {
@@ -72,7 +72,7 @@
 
 .roleDescription {
   margin: 0;
-  color: #aaa;
+  color: var(--text-secondary);
   font-size: 0.9rem;
   line-height: 1.4;
 }
@@ -100,9 +100,9 @@
   max-width: 800px;
   margin: 0 auto 30px;
   padding: 20px;
-  background: #1a1a1a;
+  background: var(--card-bg);
   border-radius: 12px;
-  border: 1px solid #333;
+  border: 1px solid var(--border-color);
 }
 
 .avatarContainer {
@@ -124,12 +124,12 @@
   width: 120px;
   height: 120px;
   border-radius: 50%;
-  background: #333;
+  background: var(--bg-secondary);
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 3px solid #555;
-  color: #aaa;
+  border: 3px solid var(--border-color);
+  color: var(--text-secondary);
   font-size: 1.2rem;
 }
 
@@ -160,23 +160,23 @@
 }
 
 .confirmContent {
-  background: #1a1a1a;
+  background: var(--card-bg);
   border-radius: 12px;
   padding: 24px;
   max-width: 400px;
   width: 90%;
-  border: 1px solid #333;
+  border: 1px solid var(--border-color);
 }
 
 .confirmContent h3 {
   margin: 0 0 16px;
-  color: #fff;
+  color: var(--text-main);
   font-size: 1.2rem;
 }
 
 .confirmContent p {
   margin: 0 0 20px;
-  color: #ccc;
+  color: var(--text-secondary);
   line-height: 1.4;
 }
 
@@ -204,6 +204,64 @@
   padding: 10px 20px;
   cursor: pointer;
   font-size: 0.9rem;
+}
+
+.themeSection {
+  max-width: 800px;
+  margin: 0 auto 30px;
+  padding: 20px;
+  background: var(--card-bg);
+  border-radius: 12px;
+  border: 1px solid var(--border-color);
+}
+
+.themeSection h3 {
+  margin: 0 0 16px;
+  color: var(--text-main);
+  font-size: 1.2rem;
+}
+
+.themeButtons {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.themeButton {
+  background: var(--bg-secondary);
+  color: var(--text-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 12px 20px;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.themeButton:hover {
+  background: var(--accent-neutral);
+  border-color: var(--accent-warm);
+}
+
+.themeButton.active {
+  background: linear-gradient(90deg, #ff4500, #ff8c00);
+  color: #fff;
+  border-color: #ff4500;
+}
+
+.themeButton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.themeDescription {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  line-height: 1.4;
 }
 
 

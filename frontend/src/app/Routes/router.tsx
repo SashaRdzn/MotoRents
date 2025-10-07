@@ -8,6 +8,7 @@ import MotoDetail from '@/pages/MotoDetail/MotoDetail'
 import MyBookings from '@/pages/Bookings/MyBookings'
 import Profile from '@/pages/Profile/Profile'
 import MyMotorcycles from '@/pages/MyMotorcycles/MyMotorcycles'
+import CreateListing from '@/pages/Admin/CreateListing'
 import ProtectedRoute from '@/components/ProtectedRoute/ProtectedRoute'
 import NotFound from '@/components/NotFound/NotFound'
 
@@ -47,6 +48,10 @@ export const router = createBrowserRouter([
             {
                 path: "/motorcycle/:id",
                 element: <MotoDetail />
+            },
+            {
+                path: "/admin/create-listing",
+                element: <ProtectedRoute><CreateListing /></ProtectedRoute>,
             },
             {
                 path: '*',

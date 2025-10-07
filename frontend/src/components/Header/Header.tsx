@@ -17,9 +17,43 @@ const Header = () => {
     const [isOpen, setIsOpen] = React.useState(false)
     const [logoutReq] = useLogoutMutation()
     const { show } = useToast()
+    const [isHidden, setIsHidden] = React.useState(false)
+    const lastScrollYRef = React.useRef<number>(0)
+    const tickingRef = React.useRef<boolean>(false)
+
+    React.useEffect(() => {
+        const handleScroll = () => {
+            if (tickingRef.current) return
+            window.requestAnimationFrame(() => {
+                const currentY = window.scrollY
+                const lastY = lastScrollYRef.current
+                const delta = currentY - lastY
+                const isScrollingDown = delta > 0
+
+                // Always show near top
+                if (currentY < 20) {
+                    setIsHidden(false)
+                } else {
+                    // Apply a small threshold to avoid flicker on tiny scrolls
+                    const threshold = 6
+                    if (Math.abs(delta) > threshold) {
+                        setIsHidden(isScrollingDown)
+                    }
+                }
+
+                lastScrollYRef.current = currentY
+                tickingRef.current = false
+            })
+            tickingRef.current = true
+        }
+
+        lastScrollYRef.current = window.scrollY
+        window.addEventListener('scroll', handleScroll, { passive: true })
+        return () => window.removeEventListener('scroll', handleScroll)
+    }, [])
 
     return (
-        <header className={styles.header}>
+        <header className={`${styles.header} ${isHidden ? styles.hidden : ''}`}>
             <nav className={styles.navigate}>
                 <div className={styles.leftNav}>
                     <Link to={'/'}>Главная</Link>

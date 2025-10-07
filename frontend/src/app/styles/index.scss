@@ -9,12 +9,11 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
-  --bg-primary: #1a1423;
-  --bg-secondary: #2a2133;
-  --text-main: #faed26;
+  /* Темная тема (по умолчанию) */
+  --bg-primary:  linear-gradient(180deg, #0a0a0a 0%, #1a1a1a 100%);
+  --bg-secondary: #1a1a1a;
+  --text-main: #ffffff;
   --text-secondary: #9d8d8f;
-
-  --accent-primary: #faed26;
   --accent-danger: #ff5e5b;
   --accent-warm: #9b786f;
   --accent-neutral: #5a5560;
@@ -24,17 +23,40 @@
       rgba(251, 242, 54, 0.7) 100%);
   --gradient-warm: linear-gradient(135deg, var(--accent-warm) 0%, #8a6e64 100%);
 
-  --border-color: #3e3647;
-  --card-bg: #231b2b;
+  --border-color: #302d2d;
+
+  --card-bg: #1a1a1a;
   --shadow-primary: 0 4px 20px rgba(250, 237, 38, 0.15);
+}
+
+/* Светлая тема */
+.light-theme {
+  --bg-primary: linear-gradient(180deg, #f8f9fa 0%, #e9ecef 100%);
+  --bg-secondary: #ffffff;
+  --text-main: #212529;
+  --text-secondary: #6c757d;
+  --accent-danger: #dc3545;
+  --accent-warm: #6c757d;
+  --accent-neutral: #adb5bd;
+
+  --gradient-primary: linear-gradient(135deg,
+      var(--accent-primary) 0%,
+      rgba(251, 242, 54, 0.7) 100%);
+  --gradient-warm: linear-gradient(135deg, var(--accent-warm) 0%, #8a6e64 100%);
+
+  --border-color: #dee2e6;
+  --card-bg: #ffffff;
+  --shadow-primary: 0 4px 20px rgba(0, 0, 0, 0.1);
 }
 
 body {
   background: var(--bg-primary);
+  min-height: 100vh;
   color: var(--text-main);
   line-height: 1.6;
   scrollbar-gutter: stable;
   overscroll-behavior: none;
+  transition: background 0.3s ease, color 0.3s ease;
 }
 
 ::-webkit-scrollbar {

@@ -1,0 +1,144 @@
+.page {
+  min-height: 100vh;
+  background: linear-gradient(180deg, #0a0a0a 0%, #1a1a1a 100%);
+  color: #fff;
+  padding: 40px 20px;
+}
+
+.header {
+  max-width: 1200px;
+  margin: 0 auto 40px;
+  text-align: center;
+}
+
+.title {
+  font-size: 2.5rem;
+  background: linear-gradient(90deg, #ff4500, #ff8c00);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 16px;
+}
+
+.subtitle {
+  font-size: 1.2rem;
+  color: #ccc;
+  margin: 0;
+}
+
+.content {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  gap: 40px;
+}
+
+.infoCard {
+  background: linear-gradient(135deg, #1e1e1e 0%, #2a2a2a 100%);
+  border-radius: 12px;
+  padding: 32px;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+}
+
+.infoCard h2 {
+  color: #ff8c00;
+  margin-bottom: 20px;
+  font-size: 1.5rem;
+}
+
+.infoCard ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.infoCard li {
+  padding: 8px 0;
+  border-bottom: 1px solid #333;
+  position: relative;
+  padding-left: 24px;
+}
+
+.infoCard li:before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  color: #ff4500;
+  font-weight: bold;
+}
+
+.infoCard li:last-child {
+  border-bottom: none;
+}
+
+.actions {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.createButton {
+  background: linear-gradient(90deg, #ff4500, #ff8c00);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 16px 32px;
+  font-size: 1.1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  min-width: 200px;
+}
+
+.createButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(255, 69, 0, 0.3);
+}
+
+.backButton {
+  background: transparent;
+  color: #ff8c00;
+  border: 2px solid #ff8c00;
+  border-radius: 8px;
+  padding: 14px 32px;
+  font-size: 1.1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  min-width: 200px;
+}
+
+.backButton:hover {
+  background: #ff8c00;
+  color: #fff;
+  transform: translateY(-2px);
+}
+
+@media (max-width: 768px) {
+  .page {
+    padding: 20px 16px;
+  }
+  
+  .title {
+    font-size: 2rem;
+  }
+  
+  .subtitle {
+    font-size: 1rem;
+  }
+  
+  .infoCard {
+    padding: 24px;
+  }
+  
+  .actions {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .createButton,
+  .backButton {
+    width: 100%;
+    max-width: 300px;
+  }
+}

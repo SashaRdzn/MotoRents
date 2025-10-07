@@ -1,5 +1,8 @@
 import { useEffect, useState, useRef } from 'react'
-import { useGetMeQuery, useUpdateMeMutation, useUpdateRoleMutation, useUploadAvatarMutation } from '@/app/api/api'
+import { useGetMeQuery, useUpdateMeMutation, useUpdateRoleMutation, useUploadAvatarMutation, useUpdateThemeMutation } from '@/app/api/api'
+import { useDispatch, useSelector } from 'react-redux'
+import type { RootState } from '@/app/store/store'
+import { setTheme } from '@/app/store/slices/themeSlice'
 import styles from './profile.module.scss'
 import { useToast } from '@/components/Toast/ToastProvider'
 
@@ -8,7 +11,10 @@ const Profile = () => {
   const [updateMe, { isLoading }] = useUpdateMeMutation()
   const [updateRole, { isLoading: isRoleLoading }] = useUpdateRoleMutation()
   const [uploadAvatar, { isLoading: isAvatarLoading }] = useUploadAvatarMutation()
+  const [updateTheme, { isLoading: isThemeLoading }] = useUpdateThemeMutation()
   const { show } = useToast()
+  const dispatch = useDispatch()
+  const currentTheme = useSelector((state: RootState) => state.theme.currentTheme)
   const [form, setForm] = useState({ first_name: '', last_name: '', phone: '', driving_experience: 0 })
   const [selectedRole, setSelectedRole] = useState('')
   const [showRoleConfirm, setShowRoleConfirm] = useState(false)
@@ -24,7 +30,7 @@ const Profile = () => {
         phone: user.phone ?? '',
         driving_experience: user.driving_experience ?? 0,
       })
-      setSelectedRole(user.role ?? 'client')
+      setSelectedRole(data?.role ?? 'client')
     }
   }, [data])
 
@@ -66,6 +72,16 @@ const Profile = () => {
       show('Аватар обновлен', 'success')
     } catch (e: any) {
       show(e.data?.detail || 'Не удалось загрузить аватар', 'error')
+    }
+  }
+
+  const handleThemeChange = async (newTheme: 'dark' | 'light') => {
+    try {
+      await updateTheme({ theme: newTheme }).unwrap()
+      dispatch(setTheme(newTheme))
+      show('Тема изменена', 'success')
+    } catch (e: any) {
+      show('Не удалось изменить тему', 'error')
     }
   }
 
@@ -142,6 +158,35 @@ const Profile = () => {
             </p>
           </>
         )}
+      </div>
+
+      {/* Выбор темы */}
+      <div className={styles.themeSection}>
+        <h3>Тема оформления</h3>
+        <div className={styles.themeButtons}>
+          <button 
+            type="button"
+            className={`${styles.themeButton} ${currentTheme === 'dark' ? styles.active : ''}`}
+            onClick={() => handleThemeChange('dark')}
+            disabled={isThemeLoading}
+          >
+            🌙 Темная
+          </button>
+          <button 
+            type="button"
+            className={`${styles.themeButton} ${currentTheme === 'light' ? styles.active : ''}`}
+            onClick={() => handleThemeChange('light')}
+            disabled={isThemeLoading}
+          >
+            ☀️ Светлая
+          </button>
+        </div>
+        <p className={styles.themeDescription}>
+          {currentTheme === 'dark' 
+            ? 'Используется темная тема оформления' 
+            : 'Используется светлая тема оформления'
+          }
+        </p>
       </div>
 
       <form className={styles.form} onSubmit={submit}>

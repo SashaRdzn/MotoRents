@@ -12,8 +12,17 @@ export const TAG_TYPES = {
     SPACE: 'Space',
 } as const
 
+const resolveBaseUrl = () => {
+    const envUrl = import.meta.env.VITE_SERVER_URL as string | undefined
+    // Fallback to localhost in development if env is missing
+    const fallback = 'http://localhost:8000'
+    const base = envUrl && typeof envUrl === 'string' && envUrl.length > 0 ? envUrl : fallback
+    // Ensure no trailing slash for consistent request URLs
+    return base.endsWith('/') ? base.slice(0, -1) : base
+}
+
 const rawBaseQuery = fetchBaseQuery({
-    baseUrl: import.meta.env.VITE_SERVER_URL,
+    baseUrl: resolveBaseUrl(),
     // credentials: 'include',
     prepareHeaders: (headers, { getState }) => {
         const token = (getState() as RootState).auth.tokenAc
@@ -60,6 +69,7 @@ export const {
     useUpdateMeMutation,
     useUpdateRoleMutation,
     useUploadAvatarMutation,
+    useUpdateThemeMutation,
     useLogoutMutation,
     useGetMotorcyclesQuery,
     useGetMotorcycleByIdQuery,

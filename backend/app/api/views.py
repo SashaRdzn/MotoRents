@@ -2,6 +2,7 @@ from rest_framework import viewsets, status, serializers
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.decorators import action
+from rest_framework.parsers import MultiPartParser, FormParser
 from django.utils import timezone
 from .models import Motocycles, Booking, Review
 from .serializers import (
@@ -18,6 +19,7 @@ class MotorcycleViewSet(viewsets.ModelViewSet):
     serializer_class = MotocycleSerializer
     http_method_names = ["get", "post", "put", "patch"]
     permission_classes = [IsAuthenticated]
+    parser_classes = [MultiPartParser, FormParser]
     
     def get_permissions(self):
         """
@@ -137,6 +139,7 @@ class MyMotorcyclesViewSet(viewsets.ModelViewSet):
     serializer_class = MotocycleSerializer
     permission_classes = [IsAuthenticated]
     http_method_names = ["get", "post", "put", "patch", "delete"]
+    parser_classes = [MultiPartParser, FormParser]
 
     def get_serializer_class(self):
         if self.action == 'create':
