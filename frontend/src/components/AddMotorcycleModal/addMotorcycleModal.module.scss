@@ -246,23 +246,23 @@
   .modal {
     padding: 10px;
   }
-  
+
   .content {
     max-height: 95vh;
   }
-  
+
   .formGrid {
     grid-template-columns: 1fr;
   }
-  
+
   .photosGrid {
     grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
   }
-  
+
   .actions {
     flex-direction: column;
   }
-  
+
   .cancelButton,
   .submitButton {
     width: 100%;

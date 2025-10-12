@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom'
+import { Link, useLocation, useParams } from 'react-router-dom'
 import styles from './header.module.scss'
 import { useSelector, useDispatch } from 'react-redux'
 import { selectIsAuthenticated } from '@pages/Auth/authSelectors'
@@ -8,6 +8,7 @@ import React from 'react'
 import { useLogoutMutation } from '@/app/api/api'
 import { logout } from '@/app/store/slices/authSlice'
 import { useToast } from '@/components/Toast/ToastProvider'
+import {NAVIGATION_PATHS} from '../../constant/constant'
 
 const Header = () => {
     const dispatch = useDispatch()
@@ -20,6 +21,12 @@ const Header = () => {
     const [isHidden, setIsHidden] = React.useState(false)
     const lastScrollYRef = React.useRef<number>(0)
     const tickingRef = React.useRef<boolean>(false)
+    const location = useLocation()
+
+
+
+    const getActiveClass = (path: string) => location.pathname === path ? styles.active : ''
+
 
     React.useEffect(() => {
         const handleScroll = () => {
@@ -30,11 +37,9 @@ const Header = () => {
                 const delta = currentY - lastY
                 const isScrollingDown = delta > 0
 
-                // Always show near top
                 if (currentY < 20) {
                     setIsHidden(false)
                 } else {
-                    // Apply a small threshold to avoid flicker on tiny scrolls
                     const threshold = 6
                     if (Math.abs(delta) > threshold) {
                         setIsHidden(isScrollingDown)
@@ -56,28 +61,46 @@ const Header = () => {
         <header className={`${styles.header} ${isHidden ? styles.hidden : ''}`}>
             <nav className={styles.navigate}>
                 <div className={styles.leftNav}>
-                    <Link to={'/'}>Главная</Link>
-                    <Link to={'/catalog'}>Каталог</Link>
+                    {NAVIGATION_PATHS.LEFT.map((item, index) => (
+                        <Link 
+                            key={index} 
+                            to={item.path}
+                            className={getActiveClass(item.path)}
+                        >
+                            {item.label}
+                        </Link>
+                    ))}
                 </div>
 
                 <div className={styles.rightNav}>
                     {isAuthenticated ? (
                         <>
-                            <Link to={'/bookings'}>Мои брони</Link>
-                            {role === 'landlord' && (
-                                <Link to={'/my-motorcycles'}>Мои мотоциклы</Link>
-                            )}
-                            <Link to={'/profile'}>Профиль</Link>
-                            {role === 'admin' && (
-                                <>
-                                    <Link to={'/admin/create-listing'}>Создать объявление</Link>
-                                    <Link to={'/admin'}>Админ</Link>
-                                </>
-                            )}
+                            {NAVIGATION_PATHS.AUTHENTICATED.map((item, index) => {
+                                if (item.roles && !item.roles.includes(role!)) {
+                                    return null
+                                }
+                                return (
+                                    <Link 
+                                        key={index}
+                                        to={item.path}
+                                        className={getActiveClass(item.path)}
+                                    >
+                                        {item.label}
+                                    </Link>
+                                )
+                            })}
                             <button onClick={()=>setIsOpen(true)} className={styles.logoutButton}>Выйти</button>
                         </>
                     ) : (
-                        <Link to={'/auth/login'}>Войти</Link>
+                        NAVIGATION_PATHS.UNAUTHENTICATED.map((item, index) => (
+                            <Link 
+                                key={index}
+                                to={item.path}
+                                className={getActiveClass(item.path)}
+                            >
+                                {item.label}
+                            </Link>
+                        ))
                     )}
                 </div>
                 <LogoutConfirm

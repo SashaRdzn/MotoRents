@@ -29,12 +29,14 @@ export const catalogApi = (builder: ApiBuilder) => ({
     query: (id) => ({ url: `/api/motorcycles/${id}` }),
     providesTags: ["Space"],
   }),
-  // API для мотоциклов арендодателя
   getMyMotorcycles: builder.query<Motorcycle[], void>({
     query: () => ({ url: "/api/my-motorcycles" }),
     providesTags: ["Space"],
   }),
-  createMotorcycle: builder.mutation<Motorcycle, FormData | Partial<Motorcycle>>({
+  createMotorcycle: builder.mutation<
+    Motorcycle,
+    FormData | Partial<Motorcycle>
+  >({
     query: (data) => ({
       url: "/api/my-motorcycles",
       method: "POST",
@@ -42,7 +44,10 @@ export const catalogApi = (builder: ApiBuilder) => ({
     }),
     invalidatesTags: ["Space"],
   }),
-  updateMotorcycle: builder.mutation<Motorcycle, { id: number; data: Partial<Motorcycle> }>({
+  updateMotorcycle: builder.mutation<
+    Motorcycle,
+    { id: number; data: Partial<Motorcycle> }
+  >({
     query: ({ id, data }) => ({
       url: `/api/my-motorcycles/${id}`,
       method: "PATCH",
@@ -57,7 +62,10 @@ export const catalogApi = (builder: ApiBuilder) => ({
     }),
     invalidatesTags: ["Space"],
   }),
-  toggleMotorcyclePublic: builder.mutation<{ message: string; is_public: boolean }, number>({
+  toggleMotorcyclePublic: builder.mutation<
+    { message: string; is_public: boolean },
+    number
+  >({
     query: (id) => ({
       url: `/api/my-motorcycles/${id}/toggle_public`,
       method: "POST",
@@ -72,5 +80,3 @@ export const catalogApi = (builder: ApiBuilder) => ({
     invalidatesTags: ["Space"],
   }),
 });
-
-

@@ -4,23 +4,33 @@
   color: var(--text-main);
   padding: 40px 20px;
 }
-.title {
-  max-width: 800px;
-  margin: 0 auto 20px;
-  font-size: 2rem;
-  background: linear-gradient(90deg, #ff4500, #ff8c00);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
+
 .form {
   max-width: 800px;
   margin: 0 auto;
   display: grid;
   gap: 12px;
 }
-.form label { display: grid; gap: 6px; }
-.form input { background: var(--card-bg); color: var(--text-main); border: 1px solid var(--border-color); border-radius: 8px; padding: 10px 12px; }
-.form button { justify-self: start; background: linear-gradient(90deg, #ff4500, #ff8c00); color: #fff; border: none; border-radius: 8px; padding: 10px 16px; cursor: pointer; }
+.form label {
+  display: grid;
+  gap: 6px;
+}
+.form input {
+  background: var(--card-bg);
+  color: var(--text-main);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 10px 12px;
+}
+.form button {
+  justify-self: start;
+  background: linear-gradient(90deg, #ff4500, #ff8c00);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 16px;
+  cursor: pointer;
+}
 
 .roleSection {
   max-width: 800px;
@@ -263,5 +273,3 @@
   font-size: 0.9rem;
   line-height: 1.4;
 }
-
-
