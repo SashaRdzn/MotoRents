@@ -57,7 +57,7 @@ function CatalogPage() {
   };
 
   return (
-    <div className={styles.catalog}>
+    <section className={styles.catalog}>
       <div className={styles.catalogGrid}>
         {motorcycles.map((motorcycle, index) => {
           if (motorcycles.length === index + 1) {
@@ -274,7 +274,7 @@ function CatalogPage() {
           <p>Загрузка мотоциклов...</p>
         </div>
       )}
-    </div>
+    </section>
   );
 }
 

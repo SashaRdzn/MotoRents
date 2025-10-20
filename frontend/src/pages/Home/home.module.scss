@@ -1,4 +1,3 @@
-// home.module.scss
 .homePage {
   background: var(--bg-primary);
   color: var(--text-main);
@@ -10,7 +9,6 @@
   padding: 0 20px;
 }
 
-/* Герой-секция */
 .hero {
   min-height: 100vh;
   display: flex;
@@ -97,7 +95,6 @@
   }
 }
 
-/* Общие стили для секций */
 section {
   padding: 80px 0;
 }
@@ -123,7 +120,6 @@ section {
   }
 }
 
-/* Преимущества */
 .advantages {
   background: linear-gradient(180deg, #1a1a1a 0%, #0f0f0f 100%);
   
@@ -183,7 +179,6 @@ section {
   }
 }
 
-/* Наши достижения */
 .achievements {
   background: linear-gradient(180deg, #1a1a1a 0%, #0f0f0f 100%);
   
@@ -221,7 +216,6 @@ section {
   }
 }
 
-/* Карусель мотоциклов */
 .motorcycleCarousel {
   background: linear-gradient(180deg, #1a1a1a 0%, #0f0f0f 100%);
   
@@ -294,7 +288,6 @@ section {
   }
 }
 
-/* Как это работает */
 .howItWorks {
   background: linear-gradient(180deg, #1a1a1a 0%, #0f0f0f 100%);
   
@@ -352,7 +345,6 @@ section {
   }
 }
 
-/* Часто задаваемые вопросы */
 .faq {
   background: linear-gradient(180deg, #1a1a1a 0%, #0f0f0f 100%);
   
@@ -360,7 +352,7 @@ section {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 20px;
-    align-items: start; // Важно для правильного позиционирования
+    align-items: start; 
   }
   
   .faqItem {
@@ -370,8 +362,8 @@ section {
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
     transition: all 0.3s ease;
     cursor: pointer;
-    position: relative; // Для правильного позиционирования
-    z-index: 1; // Поднимаем над другими элементами
+    position: relative; 
+    z-index: 1; 
     
     &:hover {
       transform: translateY(-5px);
@@ -382,8 +374,8 @@ section {
       padding: 20px;
       display: flex;
       justify-content: space-between;
-      align-items: flex-start; // Выравниваем по верху
-      min-height: 80px; // Минимальная высота для консистентности
+      align-items: flex-start; 
+      min-height: 80px; 
       
       h3 {
         font-size: 1.2rem;
@@ -423,7 +415,7 @@ section {
     }
     
     &.active {
-      z-index: 2; // Поднимаем активный элемент выше остальных
+      z-index: 2; 
       transform: translateY(-2px);
       
       .faqToggle {
@@ -441,7 +433,6 @@ section {
       }
     }
     
-    // Анимация для плавного перемещения элементов
     &.moving {
       transition: transform 0.4s ease, box-shadow 0.4s ease;
     }
@@ -449,7 +440,6 @@ section {
 }
 
 
-/* Карусель отзывов */
 .testimonialsCarousel {
   background: linear-gradient(180deg, #1a1a1a 0%, #0f0f0f 100%);
   
@@ -506,7 +496,6 @@ section {
   }
 }
 
-/* Призыв к действию */
 .cta {
   background: linear-gradient(135deg, #1a1a1a 0%, #0f0f0f 100%);
   
@@ -553,7 +542,6 @@ section {
   }
 }
 
-/* Футер */
 .footer {
   background: #000;
   padding: 50px 0 20px;
@@ -643,7 +631,6 @@ section {
   }
 }
 
-/* Анимации для карусели */
 @keyframes scroll {
   0% {
     transform: translateX(0);

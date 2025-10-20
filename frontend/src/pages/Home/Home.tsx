@@ -74,8 +74,6 @@ function HomePage() {
     }
   ];
 
-  // Популярные мотоциклы для карусели
-  // console.log();
   
   const carouselMotorcycles = [
     {
@@ -120,7 +118,6 @@ function HomePage() {
     }
   ];
 
-  // Отзывы для карусели
   const testimonials = [
     {
       name: "Александр",
@@ -149,7 +146,6 @@ function HomePage() {
     }
   ];
 
-  // Шаги аренды
   const rentalSteps = [
     {
       step: 1,
@@ -173,7 +169,6 @@ function HomePage() {
     }
   ];
 
-  // Наши достижения
   const achievements = [
     {
       number: "500+",
@@ -193,7 +188,6 @@ function HomePage() {
     }
   ];
 
-  // Часто задаваемые вопросы
   const faqs = [
     {
       question: "Какие документы нужны для аренды мотоцикла?",
@@ -231,7 +225,6 @@ function HomePage() {
 
   return (
     <div className={styles.homePage}>
-      {/* Герой-секция */}
       <section className={styles.hero}>
         <div className={styles.heroContent}>
           <h1 className={styles.heroTitle}>
@@ -248,7 +241,6 @@ function HomePage() {
         </div>
       </section>
 
-      {/* Преимущества */}
       <section className={styles.advantages}>
         <div className={styles.container}>
           <h2 className={styles.sectionTitle}>ПОЧЕМУ ВЫБИРАЮТ НАС</h2>
@@ -268,7 +260,6 @@ function HomePage() {
         </div>
       </section>
 
-      {/* Наши достижения */}
       <section className={styles.achievements}>
         <div className={styles.container}>
           <h2 className={styles.sectionTitle}>НАШИ ДОСТИЖЕНИЯ</h2>
@@ -283,13 +274,11 @@ function HomePage() {
         </div>
       </section>
 
-      {/* Карусель мотоциклов */}
       <section className={styles.motorcycleCarousel}>
         <div className={styles.container}>
           <h2 className={styles.sectionTitle}>НАШИ МОТОЦИКЛЫ</h2>
           <div className={styles.carouselContainer}>
             <div className={styles.carouselTrack}>
-              {/* Дублируем элементы для бесконечной прокрутки */}
               {[...carouselMotorcycles, ...carouselMotorcycles].map((bike, index) => (
                 <div key={`${bike.id}-${index}`} className={styles.carouselItem}>
                   <div className={styles.carouselItemImage}>
@@ -312,7 +301,6 @@ function HomePage() {
         </div>
       </section>
 
-      {/* Как это работает */}
       <section className={styles.howItWorks}>
         <div className={styles.container}>
           <h2 className={styles.sectionTitle}>КАК ЭТО РАБОТАЕТ</h2>
@@ -330,7 +318,6 @@ function HomePage() {
         </div>
       </section>
 
-      {/* Часто задаваемые вопросы */}
       <section className={styles.faq}>
         <div className={styles.container}>
           <h2 className={styles.sectionTitle}>ЧАСТО ЗАДАВАЕМЫЕ ВОПРОСЫ</h2>
@@ -355,13 +342,11 @@ function HomePage() {
         </div>
       </section>
 
-      {/* Карусель отзывов */}
       <section className={styles.testimonialsCarousel}>
         <div className={styles.container}>
           <h2 className={styles.sectionTitle}>ОТЗЫВЫ НАШИХ КЛИЕНТОВ</h2>
           <div className={styles.carouselContainer}>
             <div className={styles.carouselTrackReverse}>
-              {/* Дублируем элементы для бесконечной прокрутки */}
               {[...testimonials, ...testimonials].map((testimonial, index) => (
                 <div key={`${testimonial.name}-${index}`} className={styles.testimonialCard}>
                   <div className={styles.testimonialRating}>
@@ -378,7 +363,6 @@ function HomePage() {
         </div>
       </section>
 
-      {/* Призыв к действию */}
       <section className={styles.cta}>
         <div className={styles.container}>
           <div className={styles.ctaContent}>
@@ -389,7 +373,6 @@ function HomePage() {
         </div>
       </section>
 
-      {/* Футер */}
       <footer className={styles.footer}>
         <div className={styles.container}>
           <div className={styles.footerContent}>
